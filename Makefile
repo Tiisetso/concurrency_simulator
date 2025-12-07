@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2025/12/07 14:15:51 by timurray         ###   ########.fr        #
+#    Updated: 2025/12/07 14:21:13 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ CPPFLAGS := -Iinclude
 CFLAGS := -Wall -Wextra -Werror
 VFLAGS := -g
 SFLAGS := -ggdb3 -fsanitize=address -fsanitize=leak -fsanitize=undefined
+
+THREADS := -pthread
 
 SOURCES := \
 src/philo.c 
@@ -35,7 +37,7 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJECTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJECTS) $(THREADS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
