@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:03:53 by timurray          #+#    #+#             */
-/*   Updated: 2025/12/18 18:34:53 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:01:22 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 
 static int	limit_check(long long n, int sign, int digit);
 
-int	ft_atoi_check(const char *nptr, int *num)
+uint	ft_atoi_check(const char *nptr, int *num)
 {
 	int			sign;
 	long long	n;

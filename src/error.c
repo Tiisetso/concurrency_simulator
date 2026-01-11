@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 17:51:51 by timurray          #+#    #+#             */
-/*   Updated: 2025/12/18 17:51:59 by timurray         ###   ########.fr       */
+/*   Created: 2026/01/11 17:15:46 by timurray          #+#    #+#             */
+/*   Updated: 2026/01/11 17:17:27 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_isdigit(int c)
+void exit_print(const char *s)
 {
-	return (c >= '0' && c <= '9');
+	printf("%s\n", s);
+	exit(EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2025/12/18 18:32:13 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/11 17:35:02 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,27 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+typedef unsigned int	uint;
+typedef struct s_philosopher
+{
+	uint				i;
+	uint				alive;
+}						t_philosopher;
+
 typedef struct s_table
 {
-	int	number_of_philosophers;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int	servings;
-}					t_table;
+	uint				number_of_philosophers;
+	uint				time_to_die;
+	uint				time_to_eat;
+	uint				time_to_sleep;
+	uint				servings;
+	uint				time_start;
+	t_philosopher		*philosophers;
+}						t_table;
 
 // UTILS
-int					ft_atoi_check(const char *nptr, int *num);
-int					ft_isspace(char c);
-int					ft_isdigit(int c);
+int						ft_atoi_check(const char *nptr, int *num);
+void					exit_print(const char *s);
 
 #endif
 
