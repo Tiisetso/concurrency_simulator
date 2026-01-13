@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/11 17:35:02 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:07:48 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_philosopher
 
 typedef struct s_table
 {
-	uint				number_of_philosophers;
+	uint				philo_count;
 	uint				time_to_die;
 	uint				time_to_eat;
-	uint				time_to_sleep;
+	uint				time_to_nap;
 	uint				servings;
 	uint				time_start;
 	t_philosopher		*philosophers;

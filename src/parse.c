@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/11 18:44:15 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:22:47 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,27 @@ static const char	*valid_num(const char *s)
 	return (num);
 }
 
+static uint ft_atoi(const *s)
+{
+	uint num;
+
+	num = 0;
+	s = valid_num(s);
+	while(ft_isdigit(s))
+		num = (num * 10) + (*s++ - 48);
+	if (num > INT_MAX) //TODO: make this smaller, INTMAX is unnecessary
+		exit_print("INT MAX is the limit");
+	return (num);
+}
+
+void set_table(t_table *table, char **av)
+{
+	table->philo_count = ft_atoi(av[1]);
+	table->time_to_die = ft_atoi(av[2]) * 1000;
+	table->time_to_eat = ft_atoi(av[3]) * 1000;
+	table->time_to_nap = ft_atoi(av[4]) * 1000;
+	if(av[5])
+		table->servings = ft_atoi(av[5]);
+	else
+		table->servings = 0;
+}
