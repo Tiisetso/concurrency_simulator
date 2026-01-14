@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/12 16:07:48 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/14 12:51:23 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct s_philosopher
 {
 	uint				i;
 	uint				alive;
+	uint	servings;
+	pthread_t thread;
+	pthread_mutex_t lock;
+	pthread_mutex_t *right_fork;
+	pthread_mutex_t *left_fork;
+	
 }						t_philosopher;
 
 typedef struct s_table
