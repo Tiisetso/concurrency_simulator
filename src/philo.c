@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/14 13:23:32 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:04:21 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,11 @@ int	main(int ac, char **av)
 Everything needs to be locked and unlocked before changing. 
 Mutexes are used for locking and unlocking.
 Atomics are essentially incorrect.
+EAT
+SLEEP
+THINK
+
+DIE?
+
+
 */

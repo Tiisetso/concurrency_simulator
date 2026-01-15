@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/14 12:51:23 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:03:49 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,38 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-typedef unsigned int	uint;
+typedef unsigned int			uint;
+typedef struct s_table			t_table;
+typedef struct s_philosopher	t_philosopher;
 typedef struct s_philosopher
 {
-	uint				i;
-	uint				alive;
-	uint	servings;
-	pthread_t thread;
-	pthread_mutex_t lock;
-	pthread_mutex_t *right_fork;
-	pthread_mutex_t *left_fork;
-	
-}						t_philosopher;
+	uint						i;
+	uint						alive;
+	uint						eating;
+	uint						servings;
+	uint						life_left;
+	pthread_t					thread;
+	pthread_mutex_t				lock;
+	pthread_mutex_t				*right_fork;
+	pthread_mutex_t				*left_fork;
+	t_table						*table;
+}								t_philosopher;
 
 typedef struct s_table
 {
-	uint				philo_count;
-	uint				time_to_die;
-	uint				time_to_eat;
-	uint				time_to_nap;
-	uint				servings;
-	uint				time_start;
-	t_philosopher		*philosophers;
-}						t_table;
+	uint						philo_count;
+	uint						time_to_die;
+	uint						time_to_eat;
+	uint						time_to_nap;
+	uint						servings;
+	uint						time_start;
+	pthread_mutex_t				*forks;
+	t_philosopher				*philosophers;
+}								t_table;
 
 // UTILS
-int						ft_atoi_check(const char *nptr, int *num);
-void					exit_print(const char *s);
+int								ft_atoi_check(const char *nptr, int *num);
+void							exit_print(const char *s);
 
 #endif
 
