@@ -6,13 +6,14 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/15 16:03:49 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:52:08 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <errno.h>
 # include <limits.h>
 # include <pthread.h>
 # include <stdarg.h>
@@ -24,38 +25,54 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-typedef unsigned int			uint;
-typedef struct s_table			t_table;
-typedef struct s_philosopher	t_philosopher;
-typedef struct s_philosopher
+typedef unsigned int	uint;
+typedef struct s_table	t_table;
+typedef struct s_philo	t_philo;
+
+typedef struct s_fork
 {
-	uint						i;
-	uint						alive;
-	uint						eating;
-	uint						servings;
-	uint						life_left;
-	pthread_t					thread;
-	pthread_mutex_t				lock;
-	pthread_mutex_t				*right_fork;
-	pthread_mutex_t				*left_fork;
-	t_table						*table;
-}								t_philosopher;
+	pthread_mutex_t		fork;
+	uint				i;
+}						t_fork;
+typedef struct s_philo
+{
+	uint				i;
+	uint				servings;
+	uint				alive;
+	uint				last_meal_time;
+	uint				eating;
+	uint				full;
+	uint				life_left;
+	pthread_t			thread_i;
+	pthread_mutex_t		lock;
+	t_fork				*right_fork;
+	t_fork				*left_fork;
+	t_table				*table;
+}						t_philo;
 
 typedef struct s_table
 {
-	uint						philo_count;
-	uint						time_to_die;
-	uint						time_to_eat;
-	uint						time_to_nap;
-	uint						servings;
-	uint						time_start;
-	pthread_mutex_t				*forks;
-	t_philosopher				*philosophers;
-}								t_table;
+	uint				n_philo;
+	uint				time_to_die;
+	uint				time_to_eat;
+	uint				time_to_nap;
+	int					servings;
+	uint				time_start;
+	uint				flag_end;
+	t_fork				*forks;
+	t_philo				*philosophers;
+}						t_table;
 
-// UTILS
-int								ft_atoi_check(const char *nptr, int *num);
-void							exit_print(const char *s);
+void					init_table(t_table *table);
+
+
+void					fork_destroy(pthread_mutex_t *mutex);
+void					fork_init(pthread_mutex_t *mutex);
+void					fork_unlock(pthread_mutex_t *mutex);
+void					fork_lock(pthread_mutex_t *mutex);
+
+int						ft_atoi_check(const char *nptr, int *num);
+void					exit_print(const char *s);
 
 #endif
 
@@ -63,7 +80,6 @@ void							exit_print(const char *s);
 TOOLS for this project
 malloc -------------- Allocates memory on the heap.
 free ---------------- Frees previously allocated memory.
-
 write --------------- Low-level write to a file descriptor.
 usleep -------------- Sleep for microseconds.
 
@@ -77,4 +93,4 @@ pthread_mutex_destroy- Destroys a mutex.
 pthread_mutex_lock -- Locks a mutex.
 pthread_mutex_unlock- Unlocks a mutex.
 
- */
+	*/

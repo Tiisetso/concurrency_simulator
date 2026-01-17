@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/15 16:04:21 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:30:31 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	
 	set_table(&table, av); //TODO: review number range
-	// init_table(&table);
+	init_table(&table);
 	// start_table(&table);
 	// clean_table(&table);
 

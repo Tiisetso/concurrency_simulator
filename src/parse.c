@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/12 16:22:47 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:31:38 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static uint ft_atoi(const *s)
 
 void set_table(t_table *table, char **av)
 {
-	table->philo_count = ft_atoi(av[1]);
+	table->n_philo = ft_atoi(av[1]);
 	table->time_to_die = ft_atoi(av[2]) * 1000;
 	table->time_to_eat = ft_atoi(av[3]) * 1000;
 	table->time_to_nap = ft_atoi(av[4]) * 1000;
