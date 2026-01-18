@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/18 13:13:59 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/18 18:03:53 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_table
 	uint				flag_end;
 	t_fork				*forks;
 	t_philo				*philosophers;
+	uint				all_threads_ready;
+	pthread_mutex_t 	table_lock;
 }						t_table;
 
 void					init_table(t_table *table);
@@ -71,7 +73,9 @@ void					fork_init(pthread_mutex_t *mutex);
 void					fork_unlock(pthread_mutex_t *mutex);
 void					fork_lock(pthread_mutex_t *mutex);
 
-int						ft_atoi_check(const char *nptr, int *num);
+void write_uint(pthread_mutex_t *mutex, uint *dest, uint val);
+uint read_uint(pthread_mutex_t *mutex, uint *val);
+uint simulation_finished(t_table *table);
 void					exit_print(const char *s);
 void set_table(t_table *table, char **av);
 

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/18 13:13:28 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/18 17:53:37 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void init_table(t_table *table)
 	uint i;
 
 	table->flag_end = 0;
+	table->all_threads_ready = 0;
 	table->philosophers = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
+	pthread_mutex_init(&table->table_lock, NULL);
 	if(!table->philosophers)
 		exit_print("malloc error philosophers");
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->n_philo);
