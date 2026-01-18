@@ -6,9 +6,15 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/15 12:10:40 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/18 13:52:52 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void start_table(t_table *table)
+{
+	if (table->servings == 0)
+		return ;
+	
+}

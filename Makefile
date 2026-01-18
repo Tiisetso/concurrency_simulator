@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/17 13:03:08 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/18 13:26:22 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,10 @@ $(SRC_DIR)/init.c \
 $(SRC_DIR)/mutex.c \
 $(SRC_DIR)/parse.c
 
-UTILS := \
-$(UTL_DIR)/ft_atoi_check.c
+# UTILS := \
+# $(UTL_DIR)/ft_atoi_check.c
 
-SOURCES += ${UTILS}
+# SOURCES += ${UTILS}
 
 OBJECTS := $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

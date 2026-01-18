@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/17 16:52:08 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/18 13:13:59 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void					fork_lock(pthread_mutex_t *mutex);
 
 int						ft_atoi_check(const char *nptr, int *num);
 void					exit_print(const char *s);
+void set_table(t_table *table, char **av);
 
 #endif
 
