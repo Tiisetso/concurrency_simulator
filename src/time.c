@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.c                                           :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/18 16:55:22 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/20 13:17:58 by timurray         ###   ########.fr       */
+/*   Created: 2026/01/20 13:30:31 by timurray          #+#    #+#             */
+/*   Updated: 2026/01/20 14:38:40 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void thread_error(int status)
+uint gettime(t_time_code time_code)
 {
-	if (status == 0)
-		return ;
-	if (status == EDEADLK)
-		exit_print("Thread deadlock");
-}
-
-void wait_all_threads(t_table *table)
-{
-	while(!read_uint(&table->table_lock, &table->all_threads_ready))
-		;
+	struct timeval tv;
+	
+	if(gettimeofday(&tv, NULL))
+		exit_print("time of day failed");
+	if(SECOND == time_code)
+		return (tv.tv_sec + (tv.tv_sec/1000000));
+	else if (MILSECOND == time)
+		return ((tv.tv_sec * 1000) + (tv.tv_usec/1000));
+	else if (MICSECOND == time_code)
+		return ((tv.tv_sec *1000000) + tv.tv_usec);
+	else
+		exit_print("gettime failure");
 }

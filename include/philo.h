@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/18 18:03:53 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/20 14:38:59 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+typedef enum e_time_code
+{
+	SECOND,
+	MILSECOND,
+	MICSECOND
+} t_time_code;
 
 typedef unsigned int	uint;
 typedef struct s_table	t_table;
@@ -65,6 +72,8 @@ typedef struct s_table
 	pthread_mutex_t 	table_lock;
 }						t_table;
 
+
+
 void					init_table(t_table *table);
 
 
@@ -78,6 +87,9 @@ uint read_uint(pthread_mutex_t *mutex, uint *val);
 uint simulation_finished(t_table *table);
 void					exit_print(const char *s);
 void set_table(t_table *table, char **av);
+
+void wait_all_threads(t_table *table);
+uint gettime(t_time_code time_code);
 
 #endif
 
