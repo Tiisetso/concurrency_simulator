@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/20 14:38:59 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/21 16:36:25 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ typedef enum e_time_code
 	MICSECOND
 } t_time_code;
 
+typedef enum e_status
+{
+	EAT,
+	SLEEP,
+	THINK,
+	L_FORK,
+	R_FORK,
+	DIE
+} t_status;
+
 typedef unsigned int	uint;
 typedef struct s_table	t_table;
 typedef struct s_philo	t_philo;
@@ -44,7 +54,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	uint				i;
-	uint				servings;
+	int				servings;
 	uint				alive;
 	uint				last_meal_time;
 	uint				eating;
@@ -66,6 +76,7 @@ typedef struct s_table
 	int					servings;
 	uint				time_start;
 	uint				flag_end;
+	pthread_mutex_t	write_lock;
 	t_fork				*forks;
 	t_philo				*philosophers;
 	uint				all_threads_ready;
@@ -90,6 +101,8 @@ void set_table(t_table *table, char **av);
 
 void wait_all_threads(t_table *table);
 uint gettime(t_time_code time_code);
+void mprint(t_status status, t_philo *philo);
+void start_table(t_table *table);
 
 #endif
 

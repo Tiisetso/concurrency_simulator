@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/18 13:26:22 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/21 16:34:02 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,17 @@ UTL_DIR := $(SRC_DIR)/utils
 OBJ_DIR := obj
 
 SOURCES := \
-$(SRC_DIR)/philo.c \
+$(SRC_DIR)/clean.c \
 $(SRC_DIR)/error.c \
 $(SRC_DIR)/init.c \
+$(SRC_DIR)/lock.c \
 $(SRC_DIR)/mutex.c \
-$(SRC_DIR)/parse.c
+$(SRC_DIR)/parse.c \
+$(SRC_DIR)/philo.c \
+$(SRC_DIR)/print.c \
+$(SRC_DIR)/start.c \
+$(SRC_DIR)/thread.c \
+$(SRC_DIR)/time.c 
 
 # UTILS := \
 # $(UTL_DIR)/ft_atoi_check.c

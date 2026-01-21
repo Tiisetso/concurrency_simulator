@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/18 17:53:37 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/21 17:21:34 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void get_forks(t_philo *philo, t_fork *forks, uint i, uint n)
 {
 	philo->left_fork = &forks[(i + 1) % n];
 	philo->right_fork = &forks[i];
-	if(philo->i % 2)
+	if(philo->i % 2 == 0)
 	{
 		philo->left_fork = &forks[i];
 		philo->right_fork = &forks[(i + 1) % n];
@@ -36,8 +36,9 @@ void init_philo(t_table *table)
 		philo->full = 0;
 		philo->servings = 0;
 		philo->table = table;
-        i++;
+		pthread_mutex_init(&philo->lock, NULL);
 		get_forks(philo, table->forks, i, table->n_philo);
+        i++;
 	}
 
 }
@@ -50,6 +51,7 @@ void init_table(t_table *table)
 	table->all_threads_ready = 0;
 	table->philosophers = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
 	pthread_mutex_init(&table->table_lock, NULL);
+	pthread_mutex_init(&table->write_lock, NULL);
 	if(!table->philosophers)
 		exit_print("malloc error philosophers");
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->n_philo);
