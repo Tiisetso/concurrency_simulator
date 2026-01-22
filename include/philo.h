@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/21 16:36:25 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/22 10:30:48 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ typedef struct s_table
 	t_fork				*forks;
 	t_philo				*philosophers;
 	uint				all_threads_ready;
+	uint	thread_count;
 	pthread_mutex_t 	table_lock;
+	pthread_t			monitor;
 }						t_table;
 
 

@@ -66,5 +66,5 @@ void	set_table(t_table *table, char **av)
 	if (av[5])
 		table->servings = ft_atoi(av[5]);
 	else
-		table->servings = 0;
+		table->servings = -1;
 }
