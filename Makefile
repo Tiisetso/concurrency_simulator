@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/21 16:34:02 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/23 17:59:35 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,11 +36,6 @@ $(SRC_DIR)/print.c \
 $(SRC_DIR)/start.c \
 $(SRC_DIR)/thread.c \
 $(SRC_DIR)/time.c 
-
-# UTILS := \
-# $(UTL_DIR)/ft_atoi_check.c
-
-# SOURCES += ${UTILS}
 
 OBJECTS := $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,9 +6,14 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:53 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/15 12:11:10 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:00:18 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void clean_table(t_table *table)
+{
+	(void)table;
+	//TODO: cleanup.
+}

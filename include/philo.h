@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/22 10:30:48 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:02:42 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_time_code
 	SECOND,
 	MILSECOND,
 	MICSECOND
-} t_time_code;
+}						t_time_code;
 
 typedef enum e_status
 {
@@ -40,7 +40,7 @@ typedef enum e_status
 	L_FORK,
 	R_FORK,
 	DIE
-} t_status;
+}						t_status;
 
 typedef unsigned int	uint;
 typedef struct s_table	t_table;
@@ -54,7 +54,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	uint				i;
-	int				servings;
+	int					servings;
 	uint				alive;
 	uint				last_meal_time;
 	uint				eating;
@@ -76,35 +76,35 @@ typedef struct s_table
 	int					servings;
 	uint				time_start;
 	uint				flag_end;
-	pthread_mutex_t	write_lock;
+	pthread_mutex_t		write_lock;
 	t_fork				*forks;
 	t_philo				*philosophers;
 	uint				all_threads_ready;
-	uint	thread_count;
-	pthread_mutex_t 	table_lock;
+	uint				thread_count;
+	pthread_mutex_t		table_lock;
 	pthread_t			monitor;
 }						t_table;
 
-
-
 void					init_table(t_table *table);
-
 
 void					fork_destroy(pthread_mutex_t *mutex);
 void					fork_init(pthread_mutex_t *mutex);
 void					fork_unlock(pthread_mutex_t *mutex);
 void					fork_lock(pthread_mutex_t *mutex);
 
-void write_uint(pthread_mutex_t *mutex, uint *dest, uint val);
-uint read_uint(pthread_mutex_t *mutex, uint *val);
-uint simulation_finished(t_table *table);
+void					write_uint(pthread_mutex_t *mutex, uint *dest,
+							uint val);
+uint					read_uint(pthread_mutex_t *mutex, uint *val);
+uint					simulation_finished(t_table *table);
 void					exit_print(const char *s);
-void set_table(t_table *table, char **av);
+void					set_table(t_table *table, char **av);
 
-void wait_all_threads(t_table *table);
-uint gettime(t_time_code time_code);
-void mprint(t_status status, t_philo *philo);
-void start_table(t_table *table);
+void					wait_all_threads(t_table *table);
+uint					gettime(t_time_code time_code);
+void					mprint(t_status status, t_philo *philo);
+void					start_table(t_table *table);
+
+void					clean_table(t_table *table);
 
 #endif
 

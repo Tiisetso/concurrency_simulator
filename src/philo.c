@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/22 10:53:36 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:02:13 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,21 @@ int	main(int ac, char **av)
 	if (!((ac == 5) || (ac == 6)))
 		return (EXIT_FAILURE);
 	
-	set_table(&table, av); //TODO: review number range
+	set_table(&table, av);
 	init_table(&table);
 	start_table(&table);
-	// clean_table(&table);
+	clean_table(&table);
 
 	return (EXIT_SUCCESS);
 }
 
 
 /*
-Atomics are essentially incorrect.
-EAT
-SLEEP
-THINK // No time associated
-DIE
 
-min max values
-servings min?
-Error handling on mutex and thread function calls.
-Clean exit
-Testing?
+TODO: review number range
+TODO: min max values
+TODO: servings min?
+TODO: Error handling on mutex and thread function calls.
+TODO: Clean exit
+TODO: Testing passthroughs
 */

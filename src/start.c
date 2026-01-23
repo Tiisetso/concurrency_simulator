@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/22 11:50:56 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:01:04 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,6 @@ void *mealtime(void *data)
 	
 	return (NULL);
 }
-
-// void wait_all_threads(t_table *table)
-// {
-// 	while(!read_uint(&table->table_lock, &table->all_threads_ready))
-// 	{
-// 		;
-// 	}
-// }
 
 uint all_threads_running(pthread_mutex_t *mutex, uint *threads, uint n_philo)
 {
