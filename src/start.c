@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:01:04 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:12:35 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void accu_sleep(uint usec, t_table *table)
 
 void eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->left_fork->fork);
+	mx_lock(&philo->left_fork->fork);
 	mprint(L_FORK, philo);
-	pthread_mutex_lock(&philo->right_fork->fork);
+	mx_lock(&philo->right_fork->fork);
 	mprint(R_FORK, philo);
 	
 	write_uint(&philo->lock, &philo->last_meal_time,gettime(MILSECOND));
@@ -48,8 +48,8 @@ void eat(t_philo *philo)
 	accu_sleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->servings > 0 && philo->servings == philo->table->servings)
 		write_uint(&philo->lock, &philo->full, 1);
-	fork_unlock(&philo->left_fork->fork);
-	fork_unlock(&philo->right_fork->fork);
+	mx_unlock(&philo->left_fork->fork);
+	mx_unlock(&philo->right_fork->fork);
 }
 
 void think(t_philo *philo)
@@ -57,12 +57,11 @@ void think(t_philo *philo)
 	mprint(THINK, philo);
 }
 
-void increase_count(pthread_mutex_t *mutex, uint *num)
+void increase_count(t_mx *mutex, uint *num)
 {
-	pthread_mutex_lock(mutex);
+	mx_lock(mutex);
 	*num += 1;
-	
-	pthread_mutex_unlock(mutex);
+	mx_lock(mutex);
 }
 
 void *mealtime(void *data)
@@ -93,15 +92,15 @@ void *mealtime(void *data)
 	return (NULL);
 }
 
-uint all_threads_running(pthread_mutex_t *mutex, uint *threads, uint n_philo)
+uint all_threads_running(t_mx *mutex, uint *threads, uint n_philo)
 {
 	uint val;
 
 	val = 0;
-	pthread_mutex_lock(mutex);
+	mx_lock(mutex);
 	if (*threads == n_philo)
 		val = 1;
-	pthread_mutex_unlock(mutex);
+	mx_unlock(mutex);
 	return(val);
 }
 

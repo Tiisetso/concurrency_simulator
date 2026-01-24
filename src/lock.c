@@ -6,26 +6,26 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 17:54:35 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:00:32 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:08:36 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	write_uint(pthread_mutex_t *mutex, uint *dest, uint val)
+void	write_uint(t_mx *mx, uint *dest, uint val)
 {
-	pthread_mutex_lock(mutex);
+	mx_lock(mx);
 	*dest = val;
-	pthread_mutex_unlock(mutex);
+	mx_unlock(mx);
 }
 
-uint	read_uint(pthread_mutex_t *mutex, uint *val)
+uint	read_uint(t_mx *mx, uint *val)
 {
 	uint	x;
 
-	pthread_mutex_lock(mutex);
+	mx_lock(mx);
 	x = *val;
-	pthread_mutex_unlock(mutex);
+	mx_unlock(mx);
 	return (x);
 }
 

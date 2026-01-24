@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:00:29 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:11:17 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_philo(t_table *table)
 		philo->full = 0;
 		philo->servings = 0;
 		philo->table = table;
-		pthread_mutex_init(&philo->lock, NULL);
+		mx_init(&philo->lock);
 		get_forks(philo, table->forks, i, table->n_philo);
 		i++;
 	}
@@ -50,17 +50,17 @@ void	init_table(t_table *table)
 	table->all_threads_ready = 0;
 	table->thread_count = 0;
 	table->philosophers = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
-	pthread_mutex_init(&table->table_lock, NULL);
-	pthread_mutex_init(&table->write_lock, NULL);
 	if (!table->philosophers)
 		exit_print("malloc error philosophers");
+	mx_init(&table->table_lock);
+	mx_init(&table->write_lock);
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->n_philo);
 	if (!table->forks)
 		exit_print("malloc error forks");
 	i = 0;
 	while (i < table->n_philo)
 	{
-		fork_init(&table->forks[i].fork);
+		mx_init(&table->forks[i].fork);
 		table->forks->i = i;
 		i++;
 	}

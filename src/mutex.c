@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 12:51:10 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:00:40 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:08:57 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@ void	mutex_error(int status)
 		exit_print("mutex error");
 }
 
-void	fork_lock(pthread_mutex_t *mutex)
+void	mx_lock(t_mx *mutex)
 {
 	mutex_error(pthread_mutex_lock(mutex));
 }
 
-void	fork_unlock(pthread_mutex_t *mutex)
+void	mx_unlock(t_mx *mutex)
 {
 	mutex_error(pthread_mutex_unlock(mutex));
 }
 
-void	fork_init(pthread_mutex_t *mutex)
+void	mx_init(t_mx *mutex)
 {
 	mutex_error(pthread_mutex_init(mutex, NULL));
 }
 
-void	fork_destroy(pthread_mutex_t *mutex)
+void	mx_destroy(t_mx *mutex)
 {
 	mutex_error(pthread_mutex_destroy(mutex));
 }

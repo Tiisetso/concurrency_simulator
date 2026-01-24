@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:02:42 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/23 18:09:53 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ typedef enum e_status
 	DIE
 }						t_status;
 
-typedef unsigned int	uint;
+typedef unsigned int uint; // TODO: not norm
+typedef pthread_mutex_t	t_mx;
+
 typedef struct s_table	t_table;
 typedef struct s_philo	t_philo;
 
@@ -61,7 +63,7 @@ typedef struct s_philo
 	uint				full;
 	uint				life_left;
 	pthread_t			thread_i;
-	pthread_mutex_t		lock;
+	t_mx				lock;
 	t_fork				*right_fork;
 	t_fork				*left_fork;
 	t_table				*table;
@@ -76,25 +78,24 @@ typedef struct s_table
 	int					servings;
 	uint				time_start;
 	uint				flag_end;
-	pthread_mutex_t		write_lock;
+	t_mx				write_lock;
 	t_fork				*forks;
 	t_philo				*philosophers;
 	uint				all_threads_ready;
 	uint				thread_count;
-	pthread_mutex_t		table_lock;
+	t_mx				table_lock;
 	pthread_t			monitor;
 }						t_table;
 
 void					init_table(t_table *table);
 
-void					fork_destroy(pthread_mutex_t *mutex);
-void					fork_init(pthread_mutex_t *mutex);
-void					fork_unlock(pthread_mutex_t *mutex);
-void					fork_lock(pthread_mutex_t *mutex);
+void					mx_destroy(t_mx *mutex);
+void					mx_init(t_mx *mutex);
+void					mx_unlock(t_mx *mutex);
+void					mx_lock(t_mx *mutex);
 
-void					write_uint(pthread_mutex_t *mutex, uint *dest,
-							uint val);
-uint					read_uint(pthread_mutex_t *mutex, uint *val);
+void					write_uint(t_mx *mutex, uint *dest, uint val);
+uint					read_uint(t_mx *mutex, uint *val);
 uint					simulation_finished(t_table *table);
 void					exit_print(const char *s);
 void					set_table(t_table *table, char **av);
