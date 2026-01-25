@@ -14,12 +14,15 @@
 
 void	get_forks(t_philo *philo, t_fork *forks, t_uint i, t_uint n)
 {
-	philo->left_fork = &forks[(i + 1) % n];
-	philo->right_fork = &forks[i];
-	if (philo->i % 2 == 0)
+	if (i < (i + 1) % n)
 	{
 		philo->left_fork = &forks[i];
 		philo->right_fork = &forks[(i + 1) % n];
+	}
+	else
+	{
+		philo->left_fork = &forks[(i + 1) % n];
+		philo->right_fork = &forks[i];
 	}
 }
 

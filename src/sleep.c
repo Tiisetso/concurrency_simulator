@@ -18,6 +18,8 @@ void	micro_sleep(t_uint usec, t_table *table)
 	t_uint	now;
 
 	start = get_time_us();
+	if (usec > 1000)
+		usleep(usec - 1000);
 	while (1)
 	{
 		if (simulation_finished(table))
@@ -25,6 +27,6 @@ void	micro_sleep(t_uint usec, t_table *table)
 		now = get_time_us();
 		if (now - start >= usec)
 			break ;
-		usleep(500);
+		usleep(200);
 	}
 }
