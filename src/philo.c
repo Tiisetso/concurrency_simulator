@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 12:39:58 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/25 17:08:43 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int ac, char **av)
 Edge test 
 ./philo 200 130 60 60
 ./philo 5 610 200 100 10
+./philo 5 610 200 100 10 
 
-TODO: give all philos same start time
 
 TODO: normalise time
 
@@ -42,7 +42,7 @@ TODO: review number range, min max values
 TODO: servings min?
 TODO: Error handling on mutex and thread function calls.
 TODO: Clean exit
-TODO: Testing pass throughs
+TODO: Testing sessions
 TODO: death detection delay
 TODO: check unused fields
 */

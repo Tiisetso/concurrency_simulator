@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 14:01:00 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/25 19:09:30 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,17 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+# define FORK "has taken a fork"
+# define EAT "is eating"
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define DIE "died"
 typedef enum e_time_code
 {
 	SECOND,
 	MILSECOND,
 	MICSECOND
 }						t_time_code;
-
-typedef enum e_status
-{
-	EAT,
-	SLEEP,
-	THINK,
-	L_FORK,
-	R_FORK,
-	DIE
-}						t_status;
 
 typedef uint64_t		t_uint;
 typedef pthread_mutex_t	t_mx;
@@ -60,7 +55,7 @@ typedef struct s_philo
 	int					servings;
 	t_uint				last_meal_time;
 	t_uint				full;
-	t_td			thread_i;
+	t_td				thread_i;
 	t_mx				lock;
 	t_fork				*right_fork;
 	t_fork				*left_fork;
@@ -82,7 +77,7 @@ typedef struct s_table
 	t_uint				thread_count;
 	t_mx				write_lock;
 	t_mx				table_lock;
-	t_td			monitor;
+	t_td				monitor;
 }						t_table;
 
 void					init_table(t_table *table);
@@ -92,18 +87,23 @@ void					mx_init(t_mx *mutex);
 void					mx_unlock(t_mx *mutex);
 void					mx_lock(t_mx *mutex);
 
-void					write_t_uint(t_mx *mutex, t_uint *dest, t_uint val);
-t_uint					read_t_uint(t_mx *mutex, t_uint *val);
+void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
+t_uint					mx_get_uint(t_mx *mutex, t_uint *val);
 t_uint					simulation_finished(t_table *table);
 void					exit_print(const char *s);
 void					set_table(t_table *table, char **av);
 
 void					wait_all_threads(t_table *table);
-t_uint					gettime(t_time_code time_code);
-void					mprint(t_status status, t_philo *philo);
-void					start_table(t_table *table);
 
+void					start_table(t_table *table);
 void					clean_table(t_table *table);
+
+void					mx_print(char *text, t_philo *philo);
+
+t_uint					get_time_ms(void);
+t_uint					get_time_us(void);
+
+void micro_sleep(t_uint usec, t_table *table);
 
 #endif
 

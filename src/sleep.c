@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.c                                           :+:      :+:    :+:   */
+/*   sleep.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/18 16:55:22 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 17:22:16 by timurray         ###   ########.fr       */
+/*   Created: 2026/01/25 19:11:41 by timurray          #+#    #+#             */
+/*   Updated: 2026/01/25 19:17:48 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	thread_error(int status)
+void	micro_sleep(t_uint usec, t_table *table)
 {
-	if (status == 0)
-		return ;
-	if (status == EDEADLK)
-		exit_print("Thread deadlock");
-}
+	t_uint	start;
+	t_uint	now;
 
-void	wait_all_threads(t_table *table)
-{
-	while (!mx_get_uint(&table->table_lock, &table->all_threads_ready))
-		usleep(1000);
+	usec *= 1000;
+	start = get_time_us();
+	while (1)
+	{
+		if (simulation_finished(table))
+			break ;
+		now = get_time_us();
+		if (now - start >= usec)
+			break ;
+		usleep(500);
+	}
 }

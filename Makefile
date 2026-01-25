@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/25 12:45:09 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/25 19:12:07 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ $(SRC_DIR)/philo.c \
 $(SRC_DIR)/print.c \
 $(SRC_DIR)/start.c \
 $(SRC_DIR)/thread.c \
+$(SRC_DIR)/sleep.c \
 $(SRC_DIR)/time.c 
 
 OBJECTS := $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
