@@ -23,5 +23,5 @@ void	thread_error(int status)
 void	wait_all_threads(t_table *table)
 {
 	while (!mx_get_uint(&table->table_lock, &table->all_threads_ready))
-		usleep(1000);
+		usleep(100);
 }

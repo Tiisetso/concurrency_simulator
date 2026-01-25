@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 19:17:56 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/25 19:29:36 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void *mealtime(void *data)
 
 	wait_all_threads(philo->table);
 	if (philo->i % 2 == 0)
-		usleep(1000);
+		usleep(5000);
 
 	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
 
 	increase_count(&philo->table->table_lock, &philo->table->thread_count);
 
-	think(philo);
+	think(philo); //TODO: improve on this.
 	while(!simulation_finished(philo->table))
 	{
 		if(philo->full)
@@ -124,7 +124,7 @@ void *monitor_meal(void *data)
 				mx_set_uint(&table->table_lock, &table->flag_end, 1);
 				t_uint elapsed;
 				elapsed = get_time_ms() - table->time_start;
-				printf("%lu %lu %s\n", elapsed, table->philosophers->i, DIE);
+				printf("%lu %lu %s\n", elapsed, table->philosophers[i].i, DIE);
 				mx_unlock(&table->write_lock);
 			}
 			if (mx_get_uint(&table->philosophers[i].lock, &table->philosophers[i].full))

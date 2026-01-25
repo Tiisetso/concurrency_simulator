@@ -17,7 +17,6 @@ void	micro_sleep(t_uint usec, t_table *table)
 	t_uint	start;
 	t_uint	now;
 
-	usec *= 1000;
 	start = get_time_us();
 	while (1)
 	{
