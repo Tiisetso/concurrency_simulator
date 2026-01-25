@@ -6,13 +6,13 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:11:17 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/24 13:29:47 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	get_forks(t_philo *philo, t_fork *forks, uint i, uint n)
+void	get_forks(t_philo *philo, t_fork *forks, t_uint i, t_uint n)
 {
 	philo->left_fork = &forks[(i + 1) % n];
 	philo->right_fork = &forks[i];
@@ -25,7 +25,7 @@ void	get_forks(t_philo *philo, t_fork *forks, uint i, uint n)
 
 void	init_philo(t_table *table)
 {
-	uint	i;
+	t_uint	i;
 	t_philo	*philo;
 
 	i = 0;
@@ -44,7 +44,7 @@ void	init_philo(t_table *table)
 
 void	init_table(t_table *table)
 {
-	uint	i;
+	t_uint	i;
 
 	table->flag_end = 0;
 	table->all_threads_ready = 0;

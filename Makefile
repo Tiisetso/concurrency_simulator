@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/23 17:59:35 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/25 12:45:09 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(SRC_DIR)/error.c \
 $(SRC_DIR)/init.c \
 $(SRC_DIR)/lock.c \
 $(SRC_DIR)/mutex.c \
-$(SRC_DIR)/parse.c \
+$(SRC_DIR)/set.c \
 $(SRC_DIR)/philo.c \
 $(SRC_DIR)/print.c \
 $(SRC_DIR)/start.c \

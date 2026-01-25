@@ -6,22 +6,22 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 17:54:35 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:08:36 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/24 13:29:47 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	write_uint(t_mx *mx, uint *dest, uint val)
+void	write_t_uint(t_mx *mx, t_uint *dest, t_uint val)
 {
 	mx_lock(mx);
 	*dest = val;
 	mx_unlock(mx);
 }
 
-uint	read_uint(t_mx *mx, uint *val)
+t_uint	read_t_uint(t_mx *mx, t_uint *val)
 {
-	uint	x;
+	t_uint	x;
 
 	mx_lock(mx);
 	x = *val;
@@ -29,7 +29,7 @@ uint	read_uint(t_mx *mx, uint *val)
 	return (x);
 }
 
-uint	simulation_finished(t_table *table)
+t_uint	simulation_finished(t_table *table)
 {
-	return (read_uint(&table->table_lock, &table->flag_end));
+	return (read_t_uint(&table->table_lock, &table->flag_end));
 }

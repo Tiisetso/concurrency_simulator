@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:55:22 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:01:20 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/24 13:29:47 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	thread_error(int status)
 
 void	wait_all_threads(t_table *table)
 {
-	while (!read_uint(&table->table_lock, &table->all_threads_ready))
+	while (!read_t_uint(&table->table_lock, &table->all_threads_ready))
 		usleep(1000);
 }

@@ -6,13 +6,13 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:30:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:01:27 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/24 13:29:47 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-uint	gettime(t_time_code time_code)
+t_uint	gettime(t_time_code time_code)
 {
 	struct timeval	tv;
 

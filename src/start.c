@@ -6,17 +6,17 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:12:35 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:52:28 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void accu_sleep(uint usec, t_table *table)
+void accu_sleep(t_uint usec, t_table *table)
 {
-	uint start;
-	uint elapsed;
-	uint rem;
+	t_uint start;
+	t_uint elapsed;
+	t_uint rem;
 
 	start = gettime(MICSECOND);
 	while(gettime(MICSECOND) - start < usec)
@@ -24,14 +24,17 @@ void accu_sleep(uint usec, t_table *table)
 		if(simulation_finished(table))
 			break;
 		elapsed = gettime(MICSECOND) - start;
-		rem = usec - elapsed;
-	}
-	if(rem > 1000)
-		usleep(usec/2);
-	else
-	{
-		while(gettime(MICSECOND) - start < usec)
-			;
+		if (usec > elapsed)
+			rem = usec - elapsed;
+		else
+			rem = 0;
+		if(rem > 1000)
+			usleep(rem/2);
+		else
+		{
+			while(gettime(MICSECOND) - start < usec)
+				;
+		}
 	}
 }
 
@@ -42,12 +45,12 @@ void eat(t_philo *philo)
 	mx_lock(&philo->right_fork->fork);
 	mprint(R_FORK, philo);
 	
-	write_uint(&philo->lock, &philo->last_meal_time,gettime(MILSECOND));
+	write_t_uint(&philo->lock, &philo->last_meal_time,gettime(MILSECOND));
 	philo->servings++;
 	mprint(EAT, philo);
 	accu_sleep(philo->table->time_to_eat, philo->table);
 	if (philo->table->servings > 0 && philo->servings == philo->table->servings)
-		write_uint(&philo->lock, &philo->full, 1);
+		write_t_uint(&philo->lock, &philo->full, 1);
 	mx_unlock(&philo->left_fork->fork);
 	mx_unlock(&philo->right_fork->fork);
 }
@@ -57,11 +60,11 @@ void think(t_philo *philo)
 	mprint(THINK, philo);
 }
 
-void increase_count(t_mx *mutex, uint *num)
+void increase_count(t_mx *mutex, t_uint *num)
 {
 	mx_lock(mutex);
 	*num += 1;
-	mx_lock(mutex);
+	mx_unlock(mutex);
 }
 
 void *mealtime(void *data)
@@ -72,7 +75,7 @@ void *mealtime(void *data)
 
 	wait_all_threads(philo->table);
 
-	write_uint(&philo->lock, &philo->last_meal_time, gettime(MILSECOND));
+	write_t_uint(&philo->lock, &philo->last_meal_time, gettime(MILSECOND));
 
 	increase_count(&philo->table->table_lock, &philo->table->thread_count);
 
@@ -92,9 +95,9 @@ void *mealtime(void *data)
 	return (NULL);
 }
 
-uint all_threads_running(t_mx *mutex, uint *threads, uint n_philo)
+t_uint all_threads_running(t_mx *mutex, t_uint *threads, t_uint n_philo)
 {
-	uint val;
+	t_uint val;
 
 	val = 0;
 	mx_lock(mutex);
@@ -104,15 +107,15 @@ uint all_threads_running(t_mx *mutex, uint *threads, uint n_philo)
 	return(val);
 }
 
-uint philo_death(t_philo *philo)
+t_uint philo_death(t_philo *philo)
 {
-	uint elapsed;
-	uint die_time;
+	t_uint elapsed;
+	t_uint die_time;
 
-	if (read_uint(&philo->lock, &philo->full))
+	if (read_t_uint(&philo->lock, &philo->full))
 		return (0);
 
-	elapsed = gettime(MILSECOND) - read_uint(&philo->lock, &philo->last_meal_time);
+	elapsed = gettime(MILSECOND) - read_t_uint(&philo->lock, &philo->last_meal_time);
 	die_time = philo->table->time_to_die / 1000;
 	if(elapsed > die_time)
 		return (1);
@@ -122,34 +125,34 @@ uint philo_death(t_philo *philo)
 void *monitor_meal(void *data)
 {
 	t_table *table;
-	uint i;
+	t_uint i;
 
 
 	table = (t_table *)data;
 	while(!all_threads_running(&table->table_lock,&table->thread_count, table->n_philo  ))
 	{
-		;
+		usleep(1000);
 	}
 
 	i = 0;
 	while(!simulation_finished(table))
 	{
 		i = 0;
-		uint full_count = 0;
+		t_uint full_count = 0;
 		while(i < table->n_philo && !simulation_finished(table))
 		{
 			if (philo_death(table->philosophers + i))
 			{
-				write_uint(&table->table_lock, &table->flag_end, 1);
+				write_t_uint(&table->table_lock, &table->flag_end, 1);
 				mprint(DIE, table->philosophers + i);
 			}
-			if (read_uint(&table->philosophers[i].lock, &table->philosophers[i].full))
+			if (read_t_uint(&table->philosophers[i].lock, &table->philosophers[i].full))
 				full_count++;
 			i++;
 		}
 		if (full_count == table->n_philo)
 		{
-			write_uint(&table->table_lock, &table->flag_end, 1);
+			write_t_uint(&table->table_lock, &table->flag_end, 1);
 			return (NULL);
 		}
 	}
@@ -163,7 +166,7 @@ void *one_philo(void *av)
 
 	philo = (t_philo *)av;
 	wait_all_threads(philo->table);
-	write_uint(&philo->lock, &philo->last_meal_time, gettime(MILSECOND));
+	write_t_uint(&philo->lock, &philo->last_meal_time, gettime(MILSECOND));
 	increase_count(&philo->table->table_lock, &philo->table->thread_count);
 	mprint(L_FORK, philo);
 	while(!simulation_finished(philo->table))
@@ -173,7 +176,7 @@ void *one_philo(void *av)
 
 void start_table(t_table *table)
 {
-	uint i;
+	t_uint i;
 
 	i = 0;
 	if (table->servings == 0)
@@ -193,7 +196,7 @@ void start_table(t_table *table)
 
 	table->time_start = gettime(MILSECOND);
 
-	write_uint(&table->table_lock, &table->all_threads_ready, 1);
+	write_t_uint(&table->table_lock, &table->all_threads_ready, 1);
 
 	i = -1;
 	while(++i < table->n_philo)

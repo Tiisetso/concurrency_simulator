@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/23 18:00:48 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/25 12:44:58 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	ft_isdigit(char c)
 
 static const char	*valid_num(const char *s)
 {
-	uint		len;
+	t_uint		len;
 	const char	*num;
 
 	len = 0;
@@ -44,9 +44,9 @@ static const char	*valid_num(const char *s)
 	return (num);
 }
 
-static uint	ft_atoi(const char *s)
+static t_uint	ft_atoi(const char *s)
 {
-	uint	num;
+	t_uint	num;
 
 	num = 0;
 	s = valid_num(s);
