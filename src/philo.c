@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:28:06 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:47:06 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ Edge test
 
 ./philo 5 800 200 200 10
 ./philo 5 610 200 200 10
-./philo 199 610 200 200 10
+./philo 199 610 200 200 10 | dies sometime
 ./philo 5 800 200 200 7
 ./philo 5 600 150 150
 TODO: normalise time
