@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:50:14 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:07:15 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	init_table(t_table *table)
 	mx_init(&table->write_lock);
 	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->n_philo);
 	if (!table->forks)
+	{
+		free(table->philosophers);
 		exit_print("malloc error forks");
+	}
 	i = 0;
 	while (i < table->n_philo)
 	{

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:50:18 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:43:04 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,6 @@ t_uint	end_table(t_table *table)
 	return (mx_get_uint(&table->table_lock, &table->flag_end));
 }
 
-void eat(t_philo *philo)
-{
-	mx_lock(&philo->left_fork->fork);
-	mx_print(FORK, philo);
-	mx_lock(&philo->right_fork->fork);
-	mx_print(FORK, philo);
-	
-	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
-	philo->servings++;
-	mx_print(EAT, philo);
-	sleep_stage(philo->table->time_to_eat_us, philo->table);
-	if (philo->table->servings > 0 && philo->servings == philo->table->servings)
-		mx_set_uint(&philo->lock, &philo->full, 1);
-	mx_unlock(&philo->left_fork->fork);
-	mx_unlock(&philo->right_fork->fork);
-}
-
-void think(t_philo *philo)
-{
-	mx_print(THINK, philo);
-}
-
-void increase_count(t_mx *mutex, t_uint *num)
-{
-	mx_lock(mutex);
-	*num += 1;
-	mx_unlock(mutex);
-}
 
 void *mealtime(void *data)
 {
@@ -91,20 +63,7 @@ t_uint all_threads_running(t_mx *mutex, t_uint *threads, t_uint n_philo)
 	return(val);
 }
 
-t_uint philo_death(t_philo *philo, t_uint current_time)
-{
-	t_uint elapsed;
-	t_uint die_time;
 
-	if (mx_get_uint(&philo->lock, &philo->full))
-		return (0);
-
-	elapsed = current_time - mx_get_uint(&philo->lock, &philo->last_meal_time);
-	die_time = philo->table->time_to_die_us / 1000;
-	if(elapsed > die_time)
-		return (1);
-	return (0);
-}
 
 void *monitor_meal(void *data)
 {
@@ -115,7 +74,7 @@ void *monitor_meal(void *data)
 	table = (t_table *)data;
 	while(!all_threads_running(&table->table_lock,&table->thread_count, table->n_philo  ))
 	{
-		usleep(1000); // TODO: replace with usleep
+		usleep(1000);
 	}
 
 	i = 0;
@@ -149,23 +108,9 @@ void *monitor_meal(void *data)
 			mx_set_uint(&table->table_lock, &table->flag_end, 1);
 			return (NULL);
 		}
-		usleep(500); // TODO: check value
+		usleep(500);
 	}
 	
-	return (NULL);
-}
-
-void *one_philo(void *av)
-{
-	t_philo *philo;
-
-	philo = (t_philo *)av;
-	wait_all_threads(philo->table);
-	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
-	increase_count(&philo->table->table_lock, &philo->table->thread_count);
-	mx_print(FORK, philo);
-	while(!end_table(philo->table))
-		usleep(200);
 	return (NULL);
 }
 
@@ -195,9 +140,7 @@ void start_table(t_table *table)
 
 	i = -1;
 	while(++i < table->n_philo)
-	{
 		pthread_join(table->philosophers[i].thread_i, NULL);
-	}
 	pthread_join(table->monitor, NULL);
 	
 }

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:38:22 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:38:16 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ t_uint					get_time_ms(void);
 t_uint					get_time_us(void);
 
 void					sleep_stage(t_uint duration_us, t_table *table);
+void					increase_count(t_mx *mutex, t_uint *num);
+t_uint					philo_death(t_philo *philo, t_uint current_time);
+
+void					*one_philo(void *av);
+void					eat(t_philo *philo);
+void					think(t_philo *philo);
 
 #endif
 

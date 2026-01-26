@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lock.c                                             :+:      :+:    :+:   */
+/*   solo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/18 17:54:35 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 14:33:27 by timurray         ###   ########.fr       */
+/*   Created: 2026/01/26 14:28:57 by timurray          #+#    #+#             */
+/*   Updated: 2026/01/26 14:35:18 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	mx_set_uint(t_mx *mx, t_uint *dest, t_uint val)
+void *one_philo(void *av)
 {
-	mx_lock(mx);
-	*dest = val;
-	mx_unlock(mx);
-}
+	t_philo *philo;
 
-t_uint	mx_get_uint(t_mx *mx, t_uint *val)
-{
-	t_uint	x;
-
-	mx_lock(mx);
-	x = *val;
-	mx_unlock(mx);
-	return (x);
-}
-
-void increase_count(t_mx *mutex, t_uint *num)
-{
-	mx_lock(mutex);
-	*num += 1;
-	mx_unlock(mutex);
+	philo = (t_philo *)av;
+	wait_all_threads(philo->table);
+	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
+	increase_count(&philo->table->table_lock, &philo->table->thread_count);
+	mx_print(FORK, philo);
+	while(!end_table(philo->table))
+		usleep(200);
+	return (NULL);
 }
