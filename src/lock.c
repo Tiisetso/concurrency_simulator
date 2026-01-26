@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 17:54:35 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 17:22:34 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:37:18 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,4 @@ t_uint	mx_get_uint(t_mx *mx, t_uint *val)
 	return (x);
 }
 
-t_uint	simulation_finished(t_table *table)
-{
-	return (mx_get_uint(&table->table_lock, &table->flag_end));
-}
+

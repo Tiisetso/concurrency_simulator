@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set.c                                              :+:      :+:    :+:   */
+/*   table_set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 12:44:58 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:50:16 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static t_uint	ft_atoi(const char *s)
 void	set_table(t_table *table, char **av)
 {
 	table->n_philo = ft_atoi(av[1]);
-	table->time_to_die = ft_atoi(av[2]) * 1000;
-	table->time_to_eat = ft_atoi(av[3]) * 1000;
-	table->time_to_nap = ft_atoi(av[4]) * 1000;
+	table->time_to_die_us = ft_atoi(av[2]) * 1000;
+	table->time_to_eat_us = ft_atoi(av[3]) * 1000;
+	table->time_to_nap_us = ft_atoi(av[4]) * 1000;
 	if (av[5])
 		table->servings = ft_atoi(av[5]);
 	else

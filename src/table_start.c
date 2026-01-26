@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start.c                                            :+:      :+:    :+:   */
+/*   table_start.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:13:37 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:50:18 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+t_uint	end_table(t_table *table)
+{
+	return (mx_get_uint(&table->table_lock, &table->flag_end));
+}
 
 void eat(t_philo *philo)
 {
@@ -22,7 +27,7 @@ void eat(t_philo *philo)
 	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
 	philo->servings++;
 	mx_print(EAT, philo);
-	micro_sleep(philo->table->time_to_eat, philo->table);
+	sleep_stage(philo->table->time_to_eat_us, philo->table);
 	if (philo->table->servings > 0 && philo->servings == philo->table->servings)
 		mx_set_uint(&philo->lock, &philo->full, 1);
 	mx_unlock(&philo->left_fork->fork);
@@ -58,7 +63,7 @@ void *mealtime(void *data)
 	increase_count(&philo->table->table_lock, &philo->table->thread_count);
 
 	think(philo); //TODO: improve on this.
-	while(!simulation_finished(philo->table))
+	while(!end_table(philo->table))
 	{
 		if(philo->full)
 			break ;
@@ -66,7 +71,7 @@ void *mealtime(void *data)
 		eat(philo);
 
 		mx_print(SLEEP, philo);
-		micro_sleep(philo->table->time_to_nap, philo->table);
+		sleep_stage(philo->table->time_to_nap_us, philo->table);
 		
 		think(philo);
 	}
@@ -95,7 +100,7 @@ t_uint philo_death(t_philo *philo, t_uint current_time)
 		return (0);
 
 	elapsed = current_time - mx_get_uint(&philo->lock, &philo->last_meal_time);
-	die_time = philo->table->time_to_die / 1000;
+	die_time = philo->table->time_to_die_us / 1000;
 	if(elapsed > die_time)
 		return (1);
 	return (0);
@@ -114,12 +119,12 @@ void *monitor_meal(void *data)
 	}
 
 	i = 0;
-	while(!simulation_finished(table))
+	while(!end_table(table))
 	{
 		i = 0;
 		t_uint full_count = 0;
 		current_time = get_time_ms();
-		while(i < table->n_philo && !simulation_finished(table))
+		while(i < table->n_philo && !end_table(table))
 		{
 			if (philo_death(table->philosophers + i, current_time))
 			{
@@ -159,7 +164,7 @@ void *one_philo(void *av)
 	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
 	increase_count(&philo->table->table_lock, &philo->table->thread_count);
 	mx_print(FORK, philo);
-	while(!simulation_finished(philo->table))
+	while(!end_table(philo->table))
 		usleep(200);
 	return (NULL);
 }

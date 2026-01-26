@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/25 19:09:30 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:38:22 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@
 # define SLEEP "is sleeping"
 # define THINK "is thinking"
 # define DIE "died"
-typedef enum e_time_code
-{
-	SECOND,
-	MILSECOND,
-	MICSECOND
-}						t_time_code;
 
 typedef uint64_t		t_uint;
 typedef pthread_mutex_t	t_mx;
@@ -66,9 +60,9 @@ typedef struct s_table
 {
 	int					servings;
 	t_uint				n_philo;
-	t_uint				time_to_die;
-	t_uint				time_to_eat;
-	t_uint				time_to_nap;
+	t_uint				time_to_die_us;
+	t_uint				time_to_eat_us;
+	t_uint				time_to_nap_us;
 	t_uint				time_start;
 	t_uint				flag_end;
 	t_fork				*forks;
@@ -89,7 +83,7 @@ void					mx_lock(t_mx *mutex);
 
 void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
 t_uint					mx_get_uint(t_mx *mutex, t_uint *val);
-t_uint					simulation_finished(t_table *table);
+t_uint					end_table(t_table *table);
 void					exit_print(const char *s);
 void					set_table(t_table *table, char **av);
 
@@ -103,7 +97,7 @@ void					mx_print(char *text, t_philo *philo);
 t_uint					get_time_ms(void);
 t_uint					get_time_us(void);
 
-void micro_sleep(t_uint usec, t_table *table);
+void					sleep_stage(t_uint duration_us, t_table *table);
 
 #endif
 
