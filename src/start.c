@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 00:29:57 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 12:13:37 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void *monitor_meal(void *data)
 					mx_set_uint(&table->table_lock, &table->flag_end, 1);
 					t_uint elapsed;
 					elapsed = current_time - table->time_start;
-					printf("%llu %llu %s\n", elapsed, table->philosophers[i].i, DIE);
+					printf("%lu %lu %s\n", elapsed, table->philosophers[i].i, DIE);
 					mx_unlock(&table->write_lock);
 				}
 			}
