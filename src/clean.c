@@ -14,6 +14,21 @@
 
 void clean_table(t_table *table)
 {
-	(void)table;
-	//TODO: cleanup.
+	t_uint	i;
+
+	if (!table)
+		return ;
+	i = 0;
+	while (i < table->n_philo)
+	{
+		mx_destroy(&table->forks[i].fork);
+		mx_destroy(&table->philosophers[i].lock);
+		i++;
+	}
+	mx_destroy(&table->write_lock);
+	mx_destroy(&table->table_lock);
+	if (table->forks)
+		free(table->forks);
+	if (table->philosophers)
+		free(table->philosophers);
 }
