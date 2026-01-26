@@ -25,10 +25,8 @@ void *mealtime(void *data)
 	philo = (t_philo *)data;
 
 	wait_all_threads(philo->table);
-	if (philo->table->n_philo < 50)
-		usleep(1000 * philo->i);
-	else if (philo->i % 2 == 0)
-		usleep(5000);
+	if (philo->i % 2 == 0)
+		usleep(1000);
 
 	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
 
@@ -87,17 +85,13 @@ void *monitor_meal(void *data)
 		{
 			if (philo_death(table->philosophers + i, current_time))
 			{
-				usleep(500);
-				current_time = get_time_ms();
-				if (philo_death(table->philosophers + i, current_time))
-				{
-					mx_lock(&table->write_lock);
-					mx_set_uint(&table->table_lock, &table->flag_end, 1);
-					t_uint elapsed;
-					elapsed = current_time - table->time_start;
-					printf("%lu %lu %s\n", elapsed, table->philosophers[i].i, DIE);
-					mx_unlock(&table->write_lock);
-				}
+				mx_lock(&table->write_lock);
+				mx_set_uint(&table->table_lock, &table->flag_end, 1);
+				t_uint elapsed;
+				elapsed = current_time - table->time_start;
+				printf("%lu %lu %s\n", elapsed, table->philosophers[i].i, DIE);
+				mx_unlock(&table->write_lock);
+				return (NULL);
 			}
 			if (mx_get_uint(&table->philosophers[i].lock, &table->philosophers[i].full))
 				full_count++;

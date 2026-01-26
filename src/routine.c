@@ -32,6 +32,10 @@ void eat(t_philo *philo)
 void think(t_philo *philo)
 {
 	mx_print(THINK, philo);
+	if (philo->table->n_philo % 2 != 0)
+	{
+		usleep(100); 
+	}
 }
 
 t_uint philo_death(t_philo *philo, t_uint current_time)
