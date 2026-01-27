@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:59:42 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:11:43 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,14 @@ static t_uint	get_param_us(int num)
 	return (time_us);
 }
 
-static t_uint	get_servings(int num)
+static t_uint get_cognition_us(t_table *table)
 {
-	return ((t_uint)num);
+	t_uint time_to_think_us;
+
+	time_to_think_us = (table->time_to_die_us - table->time_to_eat_us - table->time_to_nap_us) / 2;
+	if (time_to_think_us < 0)
+		time_to_think_us = 0;
+	return (time_to_think_us);
 }
 
 void	set_table(t_table *table, char **av)
@@ -62,8 +67,9 @@ void	set_table(t_table *table, char **av)
 	table->time_to_die_us = get_param_us(get_valid_num(av[2]));
 	table->time_to_eat_us = get_param_us(get_valid_num(av[3]));
 	table->time_to_nap_us = get_param_us(get_valid_num(av[4]));
+	table->time_to_cog_us = get_cognition_us(table);
 	if (av[5])
-		table->servings = get_servings(get_valid_num(av[5]));
+		table->servings = (t_uint)get_valid_num(av[5]);
 	else
 		table->servings = 0;
 }

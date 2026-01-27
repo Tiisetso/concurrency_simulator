@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/27 14:42:17 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/27 18:08:16 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME := philo
 CC := cc
 CPPFLAGS := -Iinclude
 CFLAGS := -Wall -Wextra -Werror
-VFLAGS := -g
+VFLAGS := -g -O0
 SFLAGS := -ggdb3 -fsanitize=address -fsanitize=leak -fsanitize=undefined
 
 THREADS := -pthread

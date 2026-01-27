@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:38:41 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:18:22 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int ac, char **av)
 		print_usage();
 		return (EXIT_FAILURE);
 	}
+	setbuf(stdout, NULL);
 	set_table(&table, av);
 	init_table(&table);
 	start_table(&table);
@@ -29,7 +30,7 @@ int	main(int ac, char **av)
 }
 
 /*
-
+SHOULD LIVE
 ./philo 5 610 200 100 10
 ./philo 5 800 200 200 10
 ./philo 5 610 200 200 10
@@ -39,12 +40,30 @@ int	main(int ac, char **av)
 PASSING
 FAILING
 
-./philo 3 200 65 65 5
 ./philo 199 610 200 200 10
 ./philo 131 610 200 100 10
+./philo 3 200 65 65 5
+
+198 800 200 200 10
+
+SHOULD DIE
+./philo 2 100 60 60 5
+./philo 2 100 100 100 5
+./philo 2 800 700 110 2
+
+HANGING
+NOT HANGING
+
+./philo 3 61 60 60 5
+./philo 4 190 100 100 5
+./philo 5 90 60 60 3
+./philo 10 199 100 100 10
+
+iffy
+./philo 3 600 200 200 10
+
 
 ./philo 
-
 
 TODO: Error handling on mutex and thread function calls.
 TODO: Testing sessions

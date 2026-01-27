@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 14:32:07 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 17:51:48 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_table
 	t_uint				time_to_die_us;
 	t_uint				time_to_eat_us;
 	t_uint				time_to_nap_us;
+	t_uint				time_to_cog_us;
 	t_uint				time_start;
 	t_uint				flag_end;
 	t_fork				*forks;

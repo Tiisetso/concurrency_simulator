@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 13:40:58 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 19:20:07 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ t_uint	end_table(t_table *table)
 	return (mx_get_uint(&table->table_lock, &table->flag_end));
 }
 
-
-void *mealtime(void *data)
+void	*mealtime(void *data)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)data;
-
 	wait_all_threads(philo->table);
 	if (philo->table->n_philo < 50)
 		usleep(1000 * philo->i);
@@ -34,61 +32,54 @@ void *mealtime(void *data)
 		else if (philo->table->n_philo % 2 != 0 && philo->i == 1)
 			usleep(5000);
 	}
-
 	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
-
 	increase_count(&philo->table->table_lock, &philo->table->thread_count);
-
-	think(philo); //TODO: improve on this.
-	while(!end_table(philo->table))
+	// think(philo); //TODO: improve on this.
+	while (!end_table(philo->table))
 	{
-		if(philo->full)
+		if (philo->full)
 			break ;
-
 		eat(philo);
-
 		mx_print(SLEEP, philo);
 		sleep_stage(philo->table->time_to_nap_us, philo->table);
-		
 		think(philo);
 	}
-	
 	return (NULL);
 }
 
-t_uint all_threads_running(t_mx *mutex, t_uint *threads, t_uint n_philo)
+t_uint	all_threads_running(t_mx *mutex, t_uint *threads, t_uint n_philo)
 {
-	t_uint val;
+	t_uint	val;
 
 	val = 0;
 	mx_lock(mutex);
 	if (*threads == n_philo)
 		val = 1;
 	mx_unlock(mutex);
-	return(val);
+	return (val);
 }
 
-
-
-void *monitor_meal(void *data)
+void	*monitor_meal(void *data)
 {
-	t_table *table;
-	t_uint i;
-	t_uint current_time;
+	t_table	*table;
+	t_uint	i;
+	t_uint	current_time;
+	t_uint	full_count;
+	t_uint elapsed;
 
 	table = (t_table *)data;
-	while(!all_threads_running(&table->table_lock,&table->thread_count, table->n_philo  ))
+	while (!all_threads_running(&table->table_lock, &table->thread_count,
+			table->n_philo))
 	{
 		usleep(1000);
 	}
-
 	i = 0;
-	while(!end_table(table))
+	while (!end_table(table))
 	{
 		i = 0;
-		t_uint full_count = 0;
+		full_count = 0;
 		current_time = get_time_ms();
-		while(i < table->n_philo && !end_table(table))
+		while (i < table->n_philo && !end_table(table))
 		{
 			if (philo_death(table->philosophers + i, current_time))
 			{
@@ -98,14 +89,15 @@ void *monitor_meal(void *data)
 				{
 					mx_lock(&table->write_lock);
 					mx_set_uint(&table->table_lock, &table->flag_end, 1);
-					t_uint elapsed;
 					elapsed = current_time - table->time_start;
-					printf("%lu %lu %s\n", elapsed, table->philosophers[i].i, DIE);
+					printf("%lu %lu %s\n", elapsed, table->philosophers[i].i,
+						DIE);
 					mx_unlock(&table->write_lock);
 					return (NULL);
 				}
 			}
-			if (mx_get_uint(&table->philosophers[i].lock, &table->philosophers[i].full))
+			if (mx_get_uint(&table->philosophers[i].lock,
+					&table->philosophers[i].full))
 				full_count++;
 			i++;
 		}
@@ -116,37 +108,31 @@ void *monitor_meal(void *data)
 		}
 		usleep(1000);
 	}
-	
 	return (NULL);
 }
 
-void start_table(t_table *table)
+void	start_table(t_table *table)
 {
-	t_uint i;
+	t_uint	i;
 
 	i = 0;
-	// if (table->servings == 0)
-	// 	return ;
 	if (table->n_philo == 1)
-		pthread_create(&table->philosophers[0].thread_i, NULL, one_philo, &table->philosophers[0]);
+		pthread_create(&table->philosophers[0].thread_i, NULL, one_philo,
+			&table->philosophers[0]);
 	else
 	{
 		while (i < table->n_philo)
 		{
-			pthread_create(&table->philosophers[i].thread_i, NULL, mealtime, &table->philosophers[i]);
+			pthread_create(&table->philosophers[i].thread_i, NULL, mealtime,
+				&table->philosophers[i]);
 			i++;
 		}
 	}
-
 	pthread_create(&table->monitor, NULL, monitor_meal, table);
- 
 	table->time_start = get_time_ms();
-
 	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
-
 	i = -1;
-	while(++i < table->n_philo)
+	while (++i < table->n_philo)
 		pthread_join(table->philosophers[i].thread_i, NULL);
 	pthread_join(table->monitor, NULL);
-	
 }
