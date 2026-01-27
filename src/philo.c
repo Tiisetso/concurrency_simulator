@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 16:57:10 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/26 20:23:51 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,15 @@ int	main(int ac, char **av)
 Edge test 
 ./philo 200 130 60 60
 ./philo 5 610 200 100 10
-./philo 5 610 200 100 10 
 
 ./philo 5 800 200 200 10
 ./philo 5 610 200 200 10
-./philo 199 610 200 200 10 | dies sometime
+./philo 199 610 200 200 10 
 ./philo 5 800 200 200 7
 ./philo 5 600 150 150
 
 ./philo 131 610 200 100 10
-./philo 
+./philo 199 610 200 200 10
 ./philo 
 
 TODO: review number range, min max values

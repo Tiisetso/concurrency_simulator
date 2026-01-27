@@ -28,6 +28,6 @@ void mx_print(char *text, t_philo *philo)
 		mx_unlock(&philo->table->write_lock);
 		return ;
 	}
-	printf("%lu %lu %s\n", elapsed, philo->i, text);
+	printf("%llu %llu %s\n", elapsed, philo->i, text);
 	mx_unlock(&philo->table->write_lock);
 }
