@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 17:16:14 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:24:26 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ t_uint					philo_death(t_philo *philo, t_uint current_time);
 void					*one_philo(void *av);
 void					eat(t_philo *philo);
 void					think(t_philo *philo);
+
+int	ft_isspace(char c);
+int	ft_isdigit(char c);
 
 #endif
 

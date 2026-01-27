@@ -6,23 +6,11 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:50:16 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 12:23:27 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	ft_isspace(char c)
-{
-	if ((c >= 9 && c <= 13) || (c == 32))
-		return (1);
-	return (0);
-}
-
-static int	ft_isdigit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
 
 static const char	*valid_num(const char *s)
 {

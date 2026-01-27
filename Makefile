@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/26 14:39:03 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/27 12:24:00 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,14 @@ $(SRC_DIR)/thread.c \
 $(SRC_DIR)/routine.c \
 $(SRC_DIR)/solo.c \
 $(SRC_DIR)/time.c 
+
+
+UTIL_DIR := src/utils
+UTIL_SRC := \
+$(UTIL_DIR)/ft_isdigit.c \
+$(UTIL_DIR)/ft_isspace.c 
+
+SOURCES += ${UTIL_SRC}
 
 OBJECTS := $(SOURCES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
