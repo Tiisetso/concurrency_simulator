@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 12:17:13 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:19:17 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void *monitor_meal(void *data)
 					mx_set_uint(&table->table_lock, &table->flag_end, 1);
 					t_uint elapsed;
 					elapsed = current_time - table->time_start;
-					printf("%lu %lu %s\n", elapsed, table->philosophers[i].i, DIE);
+					printf("%llu %llu %s\n", elapsed, table->philosophers[i].i, DIE);
 					mx_unlock(&table->write_lock);
 					return (NULL);
 				}
@@ -125,9 +125,9 @@ void start_table(t_table *table)
 	t_uint i;
 
 	i = 0;
-	if (table->servings == 0)
-		return ;
-	else if (table->n_philo == 1)
+	// if (table->servings == 0)
+	// 	return ;
+	if (table->n_philo == 1)
 		pthread_create(&table->philosophers[0].thread_i, NULL, one_philo, &table->philosophers[0]);
 	else
 	{

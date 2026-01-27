@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/27 12:30:15 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/27 13:19:54 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ UTIL_DIR := src/utils
 UTIL_SRC := \
 $(UTIL_DIR)/ft_isdigit.c \
 $(UTIL_DIR)/ft_isspace.c \
+$(UTIL_DIR)/ft_strlen.c \
 $(UTIL_DIR)/ft_atoi_check.c 
 
 SOURCES += ${UTIL_SRC}
