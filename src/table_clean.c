@@ -6,13 +6,13 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:53 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 12:50:11 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:58:08 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void clean_table(t_table *table)
+void	clean_table(t_table *table)
 {
 	t_uint	i;
 

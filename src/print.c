@@ -6,19 +6,18 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 11:52:43 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 12:16:53 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:57:48 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void mx_print(char *text, t_philo *philo)
+void	mx_print(char *text, t_philo *philo)
 {
-	t_uint elapsed;
+	t_uint	elapsed;
 
 	if (philo->full)
 		return ;
-
 	if (end_table(philo->table))
 		return ;
 	mx_lock(&philo->table->write_lock);

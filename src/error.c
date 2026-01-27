@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 17:15:46 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 14:31:51 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:59:55 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exit_print(const char *s)
 	printf("%s\n", s);
 	exit(EXIT_FAILURE);
 }
+
 void	print_usage(void)
 {
 	printf("Usage:\n");

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 14:32:42 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:59:42 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static t_uint	get_param_us(int num)
 	time_us = (t_uint)num * 1000;
 	return (time_us);
 }
+
 static t_uint	get_servings(int num)
 {
 	return ((t_uint)num);

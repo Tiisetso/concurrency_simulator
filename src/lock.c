@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 17:54:35 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/26 14:33:27 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 15:57:39 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_uint	mx_get_uint(t_mx *mx, t_uint *val)
 	return (x);
 }
 
-void increase_count(t_mx *mutex, t_uint *num)
+void	increase_count(t_mx *mutex, t_uint *num)
 {
 	mx_lock(mutex);
 	*num += 1;
