@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 13:19:37 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:32:07 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,12 @@ void					*one_philo(void *av);
 void					eat(t_philo *philo);
 void					think(t_philo *philo);
 
-int	ft_isspace(char c);
-int	ft_isdigit(char c);
-unsigned int ft_strlen(const char *s);
-int	ft_atoi_check(const char *nptr, int *num);
-unsigned int ft_strlen(const char *s);
+int						ft_isspace(char c);
+int						ft_isdigit(char c);
+unsigned int			ft_strlen(const char *s);
+int						ft_atoi_check(const char *nptr, int *num);
+unsigned int			ft_strlen(const char *s);
+void					print_usage(void);
 
 #endif
 
