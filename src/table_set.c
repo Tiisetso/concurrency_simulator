@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 19:11:43 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:38:36 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@ static int	get_valid_num(char *s)
 	unsigned int	i;
 	int				num;
 
+	if (!s || s[0] == '\0')
+		exit_print("Integers only.");
 	i = 0;
-	while (i < ft_strlen(s))
+	if (s[i] == '+' || s[i] == '-')
+		i++;
+	if (s[i] == '\0' || !ft_isdigit(s[i]))
+		exit_print("Integers only.");
+	while (s[i] != '\0')
 	{
-		if (!(s[i] == '-' || s[i] == '+' || ft_isdigit(s[i])))
+		if (!ft_isdigit(s[i]))
 			exit_print("Integers only.");
 		i++;
 	}
@@ -51,14 +57,18 @@ static t_uint	get_param_us(int num)
 	return (time_us);
 }
 
-static t_uint get_cognition_us(t_table *table)
+static t_uint	get_cognition_us(t_table *table)
 {
-	t_uint time_to_think_us;
+	t_uint	time_to_think_us;
 
-	time_to_think_us = (table->time_to_die_us - table->time_to_eat_us - table->time_to_nap_us) / 2;
-	if (time_to_think_us < 0)
-		time_to_think_us = 0;
-	return (time_to_think_us);
+	time_to_think_us = table->time_to_die_us;
+	if (time_to_think_us <= table->time_to_eat_us)
+		return (0);
+	time_to_think_us -= table->time_to_eat_us;
+	if (time_to_think_us <= table->time_to_nap_us)
+		return (0);
+	time_to_think_us -= table->time_to_nap_us;
+	return (time_to_think_us / 2);
 }
 
 void	set_table(t_table *table, char **av)

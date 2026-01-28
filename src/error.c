@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 17:15:46 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:59:55 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:43:59 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	exit_print(const char *s)
 
 void	print_usage(void)
 {
-	printf("Usage:\n");
-	printf("./philo <n> <d> <e> <s> <v>\n");
-	printf("n number of philosophers 1 - 200\n");
-	printf("d time to die > 60 ms\n");
-	printf("e time to eat> 60 ms\n");
-	printf("s time to sleep > 60 ms\n");
-	printf("v number of servings per philosopher > 0 (optional)\n");
+	printf("Usage:\n\n");
+	printf("./philo <np> <td> <te> <ts> <ns>\n\n");
+	printf("<np> number of philosophers: 1 - 200\n");
+	printf("<td> time to die: > 60 ms\n");
+	printf("<te> time to eat: > 60 ms\n");
+	printf("<ts> time to sleep: > 60 ms\n");
+	printf("<nv> number of servings per philosopher (optional): > 0\n\n");
 }
