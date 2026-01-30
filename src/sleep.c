@@ -18,8 +18,6 @@ void	sleep_stage(t_uint duration_us, t_table *table)
 	t_uint	now_us;
 
 	start_us = get_time_us();
-	if (duration_us > 10000)
-		usleep(duration_us - 10000);
 	while (1)
 	{
 		if (end_table(table))

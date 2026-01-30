@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 19:12:20 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 21:36:46 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	t_uint				i;
-	int					servings;
+	t_uint					servings;
 	t_uint				last_meal_time;
 	t_uint				full;
 	t_td				thread_i;
@@ -61,7 +61,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int					servings;
+	t_uint					servings;
 	t_uint				n_philo;
 	t_uint				time_to_die_us;
 	t_uint				time_to_eat_us;
@@ -88,11 +88,13 @@ void					mx_lock(t_mx *mutex);
 void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
 t_uint					mx_get_uint(t_mx *mutex, t_uint *val);
 t_uint					end_table(t_table *table);
+
 void					exit_print(const char *s);
-void					set_table(t_table *table, char **av);
+int						return_error(const char *s, int err);
 
 void					wait_all_threads(t_table *table);
 
+int						set_table(t_table *table, char **av);
 void					start_table(t_table *table);
 void					clean_table(t_table *table);
 

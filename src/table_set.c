@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 14:57:36 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 21:43:00 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,45 +18,45 @@ static int	get_valid_num(char *s)
 	int				num;
 
 	if (!s || s[0] == '\0')
-		exit_print("Positive integers only.");
+		return (-1);
 	i = 0;
 	if (s[i] == '+')
 		i++;
 	else if (s[i] == '-')
-		exit_print("Positive integers only.");
+		return (-1);
 	if (s[i] == '\0' || !ft_isdigit(s[i]))
-		exit_print("Positive integers only.");
+		return (-1);
 	while (s[i] != '\0')
 	{
 		if (!ft_isdigit(s[i]))
-			exit_print("Positive integers only.");
+			return (-1);
 		i++;
 	}
 	if (ft_atoi_check(s, &num) == 0)
-	{
-		print_usage();
-		exit(EXIT_FAILURE);
-	}
+		return (-1);
 	return (num);
 }
 
-static t_uint	get_philo_count(int n)
+static int	get_philo_count(t_uint *param, int n)
 {
+	if (n < 0)
+		return (return_error("Positive integers only.", 0));
 	if (n > PHILO_MAX)
-		exit_print("Maximum 200 philosophers.");
+		return (return_error("Maximum 200 philosophers.", 0));
 	if (n < PHILO_MIN)
-		exit_print("At least 1 philosopher.");
-	return ((t_uint)n);
+		return (return_error("At least 1 philosopher.", 0));
+	*param = (t_uint)n;
+	return (1);
 }
 
-static t_uint	get_param_us(int num)
+static int	get_param_us(t_uint *param, int n)
 {
-	t_uint	time_us;
-
-	if (num < DURATION_MIN)
-		exit_print("Parameter duration: >= 60 ms.");
-	time_us = (t_uint)num * 1000;
-	return (time_us);
+	if (n < 0)
+		return (return_error("Positive integers only.", 0));
+	if (n < DURATION_MIN)
+		return (return_error("Parameter duration: >= 60 ms.", 0));
+	*param = (t_uint)n * 1000;
+	return (1);
 }
 
 static t_uint	get_cognition_us(t_table *table)
@@ -78,15 +78,27 @@ static t_uint	get_cognition_us(t_table *table)
 	return (time_to_think_us / 2);
 }
 
-void	set_table(t_table *table, char **av)
+int	set_table(t_table *table, char **av)
 {
-	table->n_philo = get_philo_count(get_valid_num(av[1]));
-	table->time_to_die_us = get_param_us(get_valid_num(av[2]));
-	table->time_to_eat_us = get_param_us(get_valid_num(av[3]));
-	table->time_to_nap_us = get_param_us(get_valid_num(av[4]));
+	int	servings;
+
+	if (!get_philo_count(&table->n_philo, get_valid_num(av[1])))
+		return (0);
+	if (!get_param_us(&table->time_to_die_us, get_valid_num(av[2])))
+		return (0);
+	if (!get_param_us(&table->time_to_eat_us, get_valid_num(av[3])))
+		return (0);
+	if (!get_param_us(&table->time_to_nap_us, get_valid_num(av[4])))
+		return (0);
 	table->time_to_cog_us = get_cognition_us(table);
-	if (av[5])
-		table->servings = (t_uint)get_valid_num(av[5]);
+	if (av[5] != NULL)
+	{
+		servings = get_valid_num(av[5]);
+		if (servings < 1)
+			return (return_error("Optional servings: 1 or more.", 0));
+		table->servings = (t_uint)servings;
+	}
 	else
-		table->servings = 0;
+		table->servings = (t_uint)0;
+	return (1);
 }

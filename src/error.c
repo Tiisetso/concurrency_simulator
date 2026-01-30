@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 17:15:46 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/28 15:43:59 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 21:12:53 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@ void	exit_print(const char *s)
 {
 	printf("%s\n", s);
 	exit(EXIT_FAILURE);
+}
+
+int	return_error(const char *s, int err)
+{
+	unsigned int	len;
+
+	len = ft_strlen(s);
+	write(2, s, len);
+	write(2, "\n", 1);
+	return (err);
 }
 
 void	print_usage(void)
