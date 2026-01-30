@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 21:30:48 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:18:40 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@ int	main(int ac, char **av)
 	t_table	table;
 
 	if (!((ac == 5) || (ac == 6)))
-	{
-		print_usage();
-		return (EXIT_FAILURE);
-	}
+		return (return_usage_error(EXIT_FAILURE));
 	if(!set_table(&table, av))
+		return(return_usage_error(EXIT_FAILURE));
+	if(!init_table(&table))
 	{
-		print_usage();
 		return (EXIT_FAILURE);
 	}
-	init_table(&table);
 	start_table(&table);
 	clean_table(&table);
 	return (EXIT_SUCCESS);

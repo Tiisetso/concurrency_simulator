@@ -6,13 +6,13 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 13:55:07 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:30:12 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	get_forks(t_philo *philo, t_fork *forks, t_uint i, t_uint n)
+static void	assign_forks(t_philo *philo, t_mx *forks, t_uint i, t_uint n)
 {
 	if (i < (i + 1) % n)
 	{
@@ -39,13 +39,13 @@ void	init_philo(t_table *table)
 		philo->full = 0;
 		philo->servings = 0;
 		philo->table = table;
-		mx_init(&philo->lock);
-		get_forks(philo, table->forks, i, table->n_philo);
+		mx_init(&philo->lock); //TODO
+		assign_forks(philo, table->forks, i, table->n_philo);
 		i++;
 	}
 }
 
-void	init_table(t_table *table)
+int	init_table(t_table *table)
 {
 	t_uint	i;
 
@@ -55,9 +55,9 @@ void	init_table(t_table *table)
 	table->philosophers = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
 	if (!table->philosophers)
 		exit_print("malloc error philosophers");
-	mx_init(&table->table_lock);
-	mx_init(&table->write_lock);
-	table->forks = (t_fork *)malloc(sizeof(t_fork) * table->n_philo);
+	mx_init(&table->table_lock); //TODO
+	mx_init(&table->write_lock); //TODO
+	table->forks = (t_mx *)malloc(sizeof(t_mx) * table->n_philo);
 	if (!table->forks)
 	{
 		free(table->philosophers);
@@ -66,8 +66,9 @@ void	init_table(t_table *table)
 	i = 0;
 	while (i < table->n_philo)
 	{
-		mx_init(&table->forks[i].fork);
+		mx_init(&table->forks[i]);
 		i++;
 	}
 	init_philo(table);
+	return (1);
 }

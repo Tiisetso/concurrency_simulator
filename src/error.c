@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 17:15:46 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 21:12:53 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:17:01 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ int	return_error(const char *s, int err)
 	len = ft_strlen(s);
 	write(2, s, len);
 	write(2, "\n", 1);
+	return (err);
+}
+
+int	return_usage_error(int err)
+{
+	print_usage();
 	return (err);
 }
 

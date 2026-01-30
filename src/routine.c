@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 14:09:01 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 19:44:34 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:42:15 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	eat(t_philo *philo)
 {
-	mx_lock(&philo->left_fork->fork);
+	mx_lock(philo->left_fork);
 	mx_print(FORK, philo);
-	mx_lock(&philo->right_fork->fork);
+	mx_lock(philo->right_fork);
 	mx_print(FORK, philo);
 	philo->servings++;
 	mx_print(EAT, philo);
@@ -24,8 +24,8 @@ void	eat(t_philo *philo)
 	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
 	if (philo->table->servings > 0 && philo->servings == philo->table->servings)
 		mx_set_uint(&philo->lock, &philo->full, 1);
-	mx_unlock(&philo->left_fork->fork);
-	mx_unlock(&philo->right_fork->fork);
+	mx_unlock(philo->left_fork);
+	mx_unlock(philo->right_fork);
 }
 
 void philo_sleep(t_philo *philo)

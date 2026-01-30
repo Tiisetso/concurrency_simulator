@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 21:44:14 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:56:39 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ void	*monitor_meal(void *data)
 	{
 		i = 0;
 		full_count = 0;
-		current_time = get_time_ms();
+		// current_time = get_time_ms();
 		while (i < table->n_philo && !end_table(table))
 		{
-			if (philo_death(table->philosophers + i, current_time))
-			{
-				usleep(500);
+			// if (philo_death(table->philosophers + i, current_time))
+			// {
+			// 	usleep(500);
 				current_time = get_time_ms();
 				if (philo_death(table->philosophers + i, current_time))
 				{
@@ -85,7 +85,7 @@ void	*monitor_meal(void *data)
 					mx_unlock(&table->write_lock);
 					return (NULL);
 				}
-			}
+			// }
 			if (mx_get_uint(&table->philosophers[i].lock,
 					&table->philosophers[i].full))
 				full_count++;

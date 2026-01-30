@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:53 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:58:08 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:30:30 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	clean_table(t_table *table)
 	i = 0;
 	while (i < table->n_philo)
 	{
-		mx_destroy(&table->forks[i].fork);
+		mx_destroy(&table->forks[i]);
 		mx_destroy(&table->philosophers[i].lock);
 		i++;
 	}

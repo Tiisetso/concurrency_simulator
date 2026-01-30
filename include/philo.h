@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 21:36:46 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 22:31:30 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,22 @@ typedef pthread_t		t_td;
 typedef struct s_table	t_table;
 typedef struct s_philo	t_philo;
 
-typedef struct s_fork
-{
-	pthread_mutex_t		fork;
-}						t_fork;
 typedef struct s_philo
 {
 	t_uint				i;
-	t_uint					servings;
+	t_uint				servings;
 	t_uint				last_meal_time;
 	t_uint				full;
 	t_td				thread_i;
 	t_mx				lock;
-	t_fork				*right_fork;
-	t_fork				*left_fork;
+	t_mx				*right_fork;
+	t_mx				*left_fork;
 	t_table				*table;
 }						t_philo;
 
 typedef struct s_table
 {
-	t_uint					servings;
+	t_uint				servings;
 	t_uint				n_philo;
 	t_uint				time_to_die_us;
 	t_uint				time_to_eat_us;
@@ -69,7 +65,7 @@ typedef struct s_table
 	t_uint				time_to_cog_us;
 	t_uint				time_start;
 	t_uint				flag_end;
-	t_fork				*forks;
+	t_mx				*forks;
 	t_philo				*philosophers;
 	t_uint				all_threads_ready;
 	t_uint				thread_count;
@@ -78,7 +74,10 @@ typedef struct s_table
 	t_td				monitor;
 }						t_table;
 
-void					init_table(t_table *table);
+int						set_table(t_table *table, char **av);
+int						init_table(t_table *table);
+void					start_table(t_table *table);
+void					clean_table(t_table *table);
 
 void					mx_destroy(t_mx *mutex);
 void					mx_init(t_mx *mutex);
@@ -91,12 +90,9 @@ t_uint					end_table(t_table *table);
 
 void					exit_print(const char *s);
 int						return_error(const char *s, int err);
+int						return_usage_error(int err);
 
 void					wait_all_threads(t_table *table);
-
-int						set_table(t_table *table, char **av);
-void					start_table(t_table *table);
-void					clean_table(t_table *table);
 
 void					mx_print(char *text, t_philo *philo);
 
