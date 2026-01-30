@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 16:30:03 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 19:24:17 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_uint	end_table(t_table *table)
 {
 	return (mx_get_uint(&table->table_lock, &table->flag_end));
 }
+
+
 
 void	*mealtime(void *data)
 {
@@ -39,10 +41,12 @@ void	*mealtime(void *data)
 	{
 		if (philo->full)
 			break ;
+		// if(!end_table(philo->table))
 		eat(philo);
-		mx_print(SLEEP, philo);
-		sleep_stage(philo->table->time_to_nap_us, philo->table);
-		think(philo);
+		if(!end_table(philo->table))	
+			philo_sleep(philo);
+		if(!end_table(philo->table))	
+			think(philo);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 13:54:33 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 19:12:20 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ unsigned int			ft_strlen(const char *s);
 int						ft_atoi_check(const char *nptr, int *num);
 unsigned int			ft_strlen(const char *s);
 void					print_usage(void);
-
+void					philo_sleep(t_philo *philo);
 #endif
 
 /*

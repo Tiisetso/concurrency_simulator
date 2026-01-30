@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 11:52:43 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:57:48 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 19:04:28 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	mx_print(char *text, t_philo *philo)
 		return ;
 	if (end_table(philo->table))
 		return ;
-	mx_lock(&philo->table->write_lock);
+	// mx_lock(&philo->table->write_lock);
 	elapsed = get_time_ms() - philo->table->time_start;
 	if (end_table(philo->table))
 	{
-		mx_unlock(&philo->table->write_lock);
+		// mx_unlock(&philo->table->write_lock);
 		return ;
 	}
+	mx_lock(&philo->table->write_lock);
 	printf("%lu %lu %s\n", elapsed, philo->i, text);
 	mx_unlock(&philo->table->write_lock);
 }
