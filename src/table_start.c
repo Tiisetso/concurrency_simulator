@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 14:11:31 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:30:03 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ void	*mealtime(void *data)
 	return (NULL);
 }
 
-t_uint	all_threads_running(t_mx *mutex, t_uint *threads, t_uint n_philo)
-{
-	t_uint	val;
-
-	val = 0;
-	mx_lock(mutex);
-	if (*threads == n_philo)
-		val = 1;
-	mx_unlock(mutex);
-	return (val);
-}
 
 void	*monitor_meal(void *data)
 {
@@ -68,11 +57,8 @@ void	*monitor_meal(void *data)
 	t_uint elapsed;
 
 	table = (t_table *)data;
-	while (!all_threads_running(&table->table_lock, &table->thread_count,
-			table->n_philo))
-	{
+	while(mx_get_uint(&table->table_lock, &table->thread_count) <  table->n_philo)
 		usleep(1000);
-	}
 	i = 0;
 	while (!end_table(table))
 	{

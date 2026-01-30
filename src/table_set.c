@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 12:18:09 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 14:57:36 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static int	get_valid_num(char *s)
 	if (!s || s[0] == '\0')
 		exit_print("Positive integers only.");
 	i = 0;
-	if (s[i] == '+' || s[i] == '-')
+	if (s[i] == '+')
 		i++;
+	else if (s[i] == '-')
+		exit_print("Positive integers only.");
 	if (s[i] == '\0' || !ft_isdigit(s[i]))
 		exit_print("Positive integers only.");
 	while (s[i] != '\0')

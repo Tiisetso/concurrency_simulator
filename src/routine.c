@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 14:09:01 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 17:57:56 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 14:55:52 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void	think(t_philo *philo)
 {
 	mx_print(THINK, philo);
 	sleep_stage(philo->table->time_to_cog_us, philo->table);
-	// think = death - eat - sleep / 2
-	// think = 
-	// if (philo->table->n_philo % 2 != 0)
-	// usleep(100);
 }
 
 t_uint	philo_death(t_philo *philo, t_uint current_time)

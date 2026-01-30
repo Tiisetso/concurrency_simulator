@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 13:53:40 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:30:16 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ SHOULD DIE
 ./philo 5 90 60 60 3
 ./philo 10 199 100 100 10
 
-./philo 
+./philo 101 180 60 60 10
 
 ./philo 199 610 200 200 10    
 
@@ -61,7 +61,10 @@ SHOULD DIE
 stagger with more
 Then start with thinking
 
+TODO: no exit allowed!!!
+
 TODO: Error handling on mutex and thread function calls.
+TODO: potential max duration?
 TODO: Testing sessions
 TODO: death detection delay
 TODO: check unused fields
