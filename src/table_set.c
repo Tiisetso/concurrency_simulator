@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/28 18:12:36 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 12:18:09 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_valid_num(char *s)
 	while (s[i] != '\0')
 	{
 		if (!ft_isdigit(s[i]))
-			exit_print("Postive integers only.");
+			exit_print("Positive integers only.");
 		i++;
 	}
 	if (ft_atoi_check(s, &num) == 0)
@@ -60,25 +60,19 @@ static t_uint	get_param_us(int num)
 static t_uint	get_cognition_us(t_table *table)
 {
 	t_uint	time_to_think_us;
-	// think = (die - eat - sleep)/2
-	// think = eat - sleep + 1ms
 
 	if (table->n_philo % 2 == 0)
 	{
 		time_to_think_us = 0;
 		return (time_to_think_us);
 	}
-
-
 	time_to_think_us = table->time_to_die_us;
 	if (time_to_think_us <= table->time_to_eat_us)
 		return (0);
-	time_to_think_us = table->time_to_eat_us;
+	time_to_think_us -= table->time_to_eat_us;
 	if (time_to_think_us <= table->time_to_nap_us)
 		return (0);
 	time_to_think_us -= table->time_to_nap_us;
-
-	
 	return (time_to_think_us / 2);
 }
 

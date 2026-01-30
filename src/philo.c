@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/28 18:08:52 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 13:41:14 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ SHOULD DIE
 ./philo 10 199 100 100 10
 
 ./philo 
+
+./philo 199 610 200 200 10    
+
+
 
 stagger with more
 Then start with thinking
