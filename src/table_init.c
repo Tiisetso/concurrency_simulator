@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:58:15 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 13:55:07 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	init_table(t_table *table)
 	while (i < table->n_philo)
 	{
 		mx_init(&table->forks[i].fork);
-		table->forks->i = i;
 		i++;
 	}
 	init_philo(table);

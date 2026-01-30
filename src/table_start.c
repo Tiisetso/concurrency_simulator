@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 19:20:07 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 14:11:31 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,28 +111,57 @@ void	*monitor_meal(void *data)
 	return (NULL);
 }
 
+void clean_failed_threads(t_table *table, t_uint n)
+{
+	t_uint i;
+
+	mx_set_uint(&table->table_lock, &table->flag_end, 1);
+	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
+
+	i = 0;
+	while(i < n)
+	{
+		pthread_join(table->philosophers[i].thread_i, NULL);
+		i++;
+	}
+}
+
+
 void	start_table(t_table *table)
 {
 	t_uint	i;
 
-	i = 0;
+	table->time_start = get_time_ms();
 	if (table->n_philo == 1)
-		pthread_create(&table->philosophers[0].thread_i, NULL, one_philo,
-			&table->philosophers[0]);
+	{
+		if(pthread_create(&table->philosophers[0].thread_i, NULL, one_philo, &table->philosophers[0]) != 0)
+			exit_print("Thread creation error.");
+	}
 	else
 	{
+		i = 0;
 		while (i < table->n_philo)
 		{
-			pthread_create(&table->philosophers[i].thread_i, NULL, mealtime,
-				&table->philosophers[i]);
+			if(pthread_create(&table->philosophers[i].thread_i, NULL, mealtime, &table->philosophers[i]) != 0)
+			{
+				clean_failed_threads(table, i);
+				exit_print("Philosopher thread creation failure.");
+			}
 			i++;
 		}
 	}
-	pthread_create(&table->monitor, NULL, monitor_meal, table);
-	table->time_start = get_time_ms();
+
+	if(pthread_create(&table->monitor, NULL, monitor_meal, table) != 0)
+	{
+		clean_failed_threads(table, i);
+		exit_print("Monitor thread creation failure.");
+	}
 	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
-	i = -1;
-	while (++i < table->n_philo)
+	i = 0;
+	while (i < table->n_philo)
+	{
 		pthread_join(table->philosophers[i].thread_i, NULL);
+		i++;
+	}
 	pthread_join(table->monitor, NULL);
 }

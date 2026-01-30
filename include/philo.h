@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 17:51:48 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/30 13:54:33 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_philo	t_philo;
 typedef struct s_fork
 {
 	pthread_mutex_t		fork;
-	t_uint				i;
 }						t_fork;
 typedef struct s_philo
 {
