@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 14:09:01 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 15:27:11 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:16:58 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	eat(t_philo *philo)
 	mx_print(FORK, philo);
 	philo->servings++;
 	mx_print(EAT, philo);
-	mx_set_uint(&philo->lock, &philo->last_meal_time_ms, get_time_ms());
 	sleep_stage(philo->table->time_to_eat_us, philo->table);
+	mx_set_uint(&philo->lock, &philo->last_meal_time_ms, get_time_ms());
 	if (philo->table->servings > 0 && philo->servings == philo->table->servings)
 		mx_set_uint(&philo->lock, &philo->full, 1);
 	mx_unlock(philo->left_fork);
