@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 11:12:39 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:59:47 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	*monitor_meal(void *data)
 	{
 		i = 0;
 		full_count = 0;
-		// current_time = get_time_ms();
+		current_time = get_time_ms();
 		while (i < table->n_philo && !end_table(table))
 		{
 			// if (philo_death(table->philosophers + i, current_time))
 			// {
 			// 	usleep(500);
-				current_time = get_time_ms();
+				// current_time = get_time_ms();
 				if (philo_death(table->philosophers + i, current_time))
 				{
 					mx_lock(&table->write_lock);
@@ -117,7 +117,7 @@ void clean_failed_threads(t_table *table, t_uint n)
 }
 
 
-void	start_table(t_table *table)
+int	start_table(t_table *table)
 {
 	t_uint	i;
 
@@ -154,4 +154,5 @@ void	start_table(t_table *table)
 		i++;
 	}
 	pthread_join(table->monitor, NULL);
+	return (0);
 }

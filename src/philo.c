@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 12:54:52 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 14:00:00 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ int	main(int ac, char **av)
 {
 	t_table	table;
 
-	if (!((ac == 5) || (ac == 6)))
-		return (return_usage_error(EXIT_FAILURE));
-	if(!set_table(&table, av))
-		return(return_usage_error(EXIT_FAILURE));
-	if(!init_table(&table))
+	if (!set_table(&table, ac, av))
+	{
+		print_usage();
+		return (EXIT_FAILURE);
+	}
+	if (!init_table(&table))
 	{
 		destroy_table(&table);
 		return (EXIT_FAILURE);
 	}
-	start_table(&table);
+	if (!start_table(&table))
+	{	
+		//TODO: clean?
+		return (EXIT_FAILURE);
+	}
 	clean_table(&table);
 	return (EXIT_SUCCESS);
 }
@@ -56,7 +61,7 @@ SHOULD DIE
 
 ./philo 101 180 60 60 10
 
-./philo 199 610 200 200 10    
+./philo 199 610 200 200 10
 
 SHOULD DIE:
 ./philo 31 599 200 200 10

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:50:56 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 21:43:00 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:56:32 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,12 @@ static t_uint	get_cognition_us(t_table *table)
 	return (time_to_think_us / 2);
 }
 
-int	set_table(t_table *table, char **av)
+int	set_table(t_table *table, int ac, char **av)
 {
 	int	servings;
 
+	if (!((ac == 5) || (ac == 6)))
+		return (0);
 	if (!get_philo_count(&table->n_philo, get_valid_num(av[1])))
 		return (0);
 	if (!get_param_us(&table->time_to_die_us, get_valid_num(av[2])))
