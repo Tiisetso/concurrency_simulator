@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 13:11:30 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 14:57:15 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	init_table_values(t_table *table)
 {
 	table->flag_end = 0;
 	table->all_threads_ready = 0;
-	table->thread_count = 0;
+	table->n_thread = 0;
 	table->philosophers = NULL;
 	table->n_philo_mx = 0;
 	table->forks = NULL;

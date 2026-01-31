@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 13:57:43 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 14:56:56 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_philo
 {
 	t_uint				i;
 	t_uint				servings;
-	t_uint				last_meal_time;
+	t_uint				last_meal_time_ms;
 	t_uint				full;
 	t_td				thread_i;
 	t_mx				lock;
@@ -71,7 +71,7 @@ typedef struct s_table
 	t_philo				*philosophers;
 	t_uint				n_philo_mx;
 	t_uint				all_threads_ready;
-	t_uint				thread_count;
+	t_uint				n_thread;
 	t_mx				write_lock;
 	bool				write_lock_init;
 	t_mx				table_lock;
@@ -95,7 +95,7 @@ void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
 t_uint					mx_get_uint(t_mx *mutex, t_uint *val);
 t_uint					end_table(t_table *table);
 
-void					exit_print(const char *s);
+// void					exit_print(const char *s);
 int						return_error(const char *s, int err);
 
 void					wait_all_threads(t_table *table);

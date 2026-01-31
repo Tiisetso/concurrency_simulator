@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:30:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:58:30 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:00:52 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ t_uint	get_time_ms(void)
 {
 	struct timeval	tv;
 
-	if (gettimeofday(&tv, NULL))
-		exit_print("time of day failed");
+	gettimeofday(&tv, NULL);
 	return ((t_uint)tv.tv_sec * 1000 + (t_uint)tv.tv_usec / 1000);
 }
 
@@ -25,7 +24,6 @@ t_uint	get_time_us(void)
 {
 	struct timeval	tv;
 
-	if (gettimeofday(&tv, NULL))
-		exit_print("time of day failed");
+	gettimeofday(&tv, NULL);
 	return ((t_uint)tv.tv_sec * 1000000 + (t_uint)tv.tv_usec);
 }

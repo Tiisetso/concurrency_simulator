@@ -6,17 +6,11 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 17:15:46 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 13:57:11 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 14:50:21 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	exit_print(const char *s)
-{
-	printf("%s\n", s);
-	exit(EXIT_FAILURE);
-}
 
 int	return_error(const char *s, int err)
 {
