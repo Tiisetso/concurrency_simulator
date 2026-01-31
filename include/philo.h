@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 17:01:54 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:13:12 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,70 +79,53 @@ typedef struct s_table
 	t_td				monitor;
 }						t_table;
 
+// PRIMARY FUNCTIONS
 int						set_table(t_table *table, int ac, char **av);
 int						init_table(t_table *table);
 int						start_table(t_table *table);
-void					clean_table(t_table *table);
-
 void					destroy_table(t_table *table);
 
+// CHECKS
 int						death_check(t_table *table, t_uint i);
 int						full_check(t_table *table, t_uint *full_count);
+t_uint					end_table(t_table *table);
 
+// THREADS AND MUTEXES
 int						mx_destroy(t_mx *mutex);
 int						mx_init(t_mx *mutex);
 int						mx_unlock(t_mx *mutex);
 int						mx_lock(t_mx *mutex);
-
 void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
 t_uint					mx_get_uint(t_mx *mutex, t_uint *val);
-t_uint					end_table(t_table *table);
-int						td_create(t_td *thread, void *(*func)(void *),
-							void *data);
-int						td_join(t_td thread);
-t_uint					end_table(t_table *table);
-int						return_error(const char *s, int err);
-
 void					wait_all_threads(t_table *table);
 void					clean_failed_threads(t_table *table, t_uint n);
+void					increase_count(t_mx *mutex, t_uint *num);
+int						td_join(t_td thread);
+int						td_create(t_td *thread, void *(*func)(void *),
+							void *data);
 
+// PRINTING
 void					mx_print(char *text, t_philo *philo);
+void					print_usage(void);
+int						return_error(const char *s, int err);
 
+// TIMING
 t_uint					get_time_ms(void);
 t_uint					get_time_us(void);
-
 void					sleep_stage(t_uint duration_us, t_table *table);
-void					increase_count(t_mx *mutex, t_uint *num);
-t_uint					philo_death(t_philo *philo, t_uint current_time);
 
+// ROUTINE
 void					*one_philo(void *av);
 void					eat(t_philo *philo);
 void					think(t_philo *philo);
+void					philo_sleep(t_philo *philo);
+t_uint					philo_death(t_philo *philo, t_uint current_time);
 
+// UTILS
 int						ft_isspace(char c);
 int						ft_isdigit(char c);
 unsigned int			ft_strlen(const char *s);
 int						ft_atoi_check(const char *nptr, int *num);
 unsigned int			ft_strlen(const char *s);
-void					print_usage(void);
-void					philo_sleep(t_philo *philo);
+
 #endif
-
-/*
-TOOLS for this project
-malloc -------------- Allocates memory on the heap.
-free ---------------- Frees previously allocated memory.
-write --------------- Low-level write to a file descriptor.
-usleep -------------- Sleep for microseconds.
-
-gettimeofday -------- Get current time with microsecond precision.
-
-pthread_create ------ Creates a new thread.
-pthread_detach ------ Detaches a thread.
-pthread_join -------- Waits for a thread to finish.
-pthread_mutex_init -- Initializes a mutex.
-pthread_mutex_destroy- Destroys a mutex.
-pthread_mutex_lock -- Locks a mutex.
-pthread_mutex_unlock- Unlocks a mutex.
-
-*/
