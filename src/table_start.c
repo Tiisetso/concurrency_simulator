@@ -6,16 +6,11 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 15:23:09 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 16:14:34 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-t_uint	end_table(t_table *table)
-{
-	return (mx_get_uint(&table->table_lock, &table->flag_end));
-}
 
 void	*mealtime(void *data)
 {
@@ -33,7 +28,7 @@ void	*mealtime(void *data)
 	while (!end_table(philo->table))
 	{
 		if (philo->full)
-		// if (mx_get_uint(&philo->lock, &philo->full))
+			// if (mx_get_uint(&philo->lock, &philo->full))
 			break ;
 		// if(!end_table(philo->table))
 		eat(philo);
@@ -100,42 +95,49 @@ void	clean_failed_threads(t_table *table, t_uint n)
 	}
 }
 
-int	start_table(t_table *t)
+static int	create_philo_threads(t_table *t, t_uint *i)
 {
-	t_uint	i;
-
-	t->time_start = get_time_ms();
 	if (t->n_philo == 1)
 	{
 		if (td_create(&t->philos[0].thread, one_philo, &t->philos[0]) != 0)
 			return (return_error("1 philosopher thread creation error.", 0));
-		i = 1;
+		(*i)++;
 	}
 	else
 	{
-		i = 0;
-		while (i < t->n_philo)
+		while (*i < t->n_philo)
 		{
-			if (td_create(&t->philos[i].thread, mealtime, &t->philos[i]) != 0)
+			if (td_create(&t->philos[*i].thread, mealtime, &t->philos[*i]) != 0)
 			{
-				clean_failed_threads(t, i);
+				clean_failed_threads(t, *i);
 				return (return_error("Philosopher thread creation error.", 0));
 			}
-			i++;
+			(*i)++;
 		}
 	}
-	if (td_create(&t->monitor, monitor_meal, t) != 0)
+	return (1);
+}
+
+int	start_table(t_table *table)
+{
+	t_uint	i;
+
+	table->time_start = get_time_ms();
+	i = 0;
+	if (!create_philo_threads(table, &i))
+		return (0);
+	if (td_create(&table->monitor, monitor_meal, table) != 0)
 	{
-		clean_failed_threads(t, i);
+		clean_failed_threads(table, i);
 		return (return_error("Monitor thread creation failure.", 0));
 	}
-	mx_set_uint(&t->table_lock, &t->all_threads_ready, 1);
+	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
 	i = 0;
-	while (i < t->n_philo)
+	while (i < table->n_philo)
 	{
-		td_join(t->philos[i].thread);
+		td_join(table->philos[i].thread);
 		i++;
 	}
-	td_join(t->monitor);
+	td_join(table->monitor);
 	return (0);
 }

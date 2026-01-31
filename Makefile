@@ -6,7 +6,7 @@
 #    By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/07 14:02:01 by timurray          #+#    #+#              #
-#    Updated: 2026/01/27 18:08:16 by timurray         ###   ########.fr        #
+#    Updated: 2026/01/31 15:45:35 by timurray         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ $(SRC_DIR)/table_clean.c \
 $(SRC_DIR)/table_init.c \
 $(SRC_DIR)/table_set.c \
 $(SRC_DIR)/table_start.c \
+$(SRC_DIR)/table_start_helper.c \
 $(SRC_DIR)/thread.c \
 $(SRC_DIR)/routine.c \
 $(SRC_DIR)/solo.c \

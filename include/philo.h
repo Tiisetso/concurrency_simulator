@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 15:25:16 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 16:13:22 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_uint					end_table(t_table *table);
 int						td_create(t_td *thread, void *(*func)(void *),
 							void *data);
 int						td_join(t_td thread);
-
+t_uint					end_table(t_table *table);
 int						return_error(const char *s, int err);
 
 void					wait_all_threads(t_table *table);
