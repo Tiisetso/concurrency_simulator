@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 16:37:29 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:01:54 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ int						start_table(t_table *table);
 void					clean_table(t_table *table);
 
 void					destroy_table(t_table *table);
+
+int						death_check(t_table *table, t_uint i);
+int						full_check(t_table *table, t_uint *full_count);
 
 int						mx_destroy(t_mx *mutex);
 int						mx_init(t_mx *mutex);

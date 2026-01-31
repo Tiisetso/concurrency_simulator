@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:55:22 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 16:37:20 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:05:00 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	wait_all_threads(t_table *table)
 		usleep(50);
 }
 
-int td_create(t_td *thread, void *(*func)(void *), void *data)
+int	td_create(t_td *thread, void *(*func)(void *), void *data)
 {
 	if (pthread_create(thread, NULL, func, data) != 0)
 		return (1);
@@ -31,6 +31,7 @@ int	td_join(t_td thread)
 		return (1);
 	return (0);
 }
+
 void	clean_failed_threads(t_table *table, t_uint n)
 {
 	t_uint	i;

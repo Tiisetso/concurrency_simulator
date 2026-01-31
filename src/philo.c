@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 14:19:22 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:04:04 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int	main(int ac, char **av)
 	if (!start_table(&table))
 	{	
 		//TODO: clean!
+		destroy_table(&table);
 		return (EXIT_FAILURE);
 	}
-	clean_table(&table);
+	// clean_table(&table);
+	destroy_table(&table);
 	return (EXIT_SUCCESS);
 }
 
