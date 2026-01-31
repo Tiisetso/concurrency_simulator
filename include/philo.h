@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 16:13:22 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 16:37:29 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_uint					end_table(t_table *table);
 int						return_error(const char *s, int err);
 
 void					wait_all_threads(t_table *table);
+void					clean_failed_threads(t_table *table, t_uint n);
 
 void					mx_print(char *text, t_philo *philo);
 
