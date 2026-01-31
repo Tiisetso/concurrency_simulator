@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 17:13:12 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:41:27 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,5 @@ int						ft_isspace(char c);
 int						ft_isdigit(char c);
 unsigned int			ft_strlen(const char *s);
 int						ft_atoi_check(const char *nptr, int *num);
-unsigned int			ft_strlen(const char *s);
 
 #endif
