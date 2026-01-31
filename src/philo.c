@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 17:06:04 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 17:13:54 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	}
 	if (!start_table(&table))
-	{	
+	{
 		destroy_table(&table);
 		return (EXIT_FAILURE);
 	}
