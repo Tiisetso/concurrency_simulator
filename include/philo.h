@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 14:56:56 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:25:16 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_philo
 	t_uint				servings;
 	t_uint				last_meal_time_ms;
 	t_uint				full;
-	t_td				thread_i;
+	t_td				thread;
 	t_mx				lock;
 	t_mx				*right_fork;
 	t_mx				*left_fork;
@@ -68,7 +68,7 @@ typedef struct s_table
 	t_uint				flag_end;
 	t_mx				*forks;
 	t_uint				n_fork_mx;
-	t_philo				*philosophers;
+	t_philo				*philos;
 	t_uint				n_philo_mx;
 	t_uint				all_threads_ready;
 	t_uint				n_thread;
@@ -94,8 +94,10 @@ int						mx_lock(t_mx *mutex);
 void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
 t_uint					mx_get_uint(t_mx *mutex, t_uint *val);
 t_uint					end_table(t_table *table);
+int						td_create(t_td *thread, void *(*func)(void *),
+							void *data);
+int						td_join(t_td thread);
 
-// void					exit_print(const char *s);
 int						return_error(const char *s, int err);
 
 void					wait_all_threads(t_table *table);

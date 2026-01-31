@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:53 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 13:06:16 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:05:56 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@ void	clean_table(t_table *table)
 	while (i < table->n_philo)
 	{
 		mx_destroy(&table->forks[i]);
-		mx_destroy(&table->philosophers[i].lock);
+		mx_destroy(&table->philos[i].lock);
 		i++;
 	}
 	mx_destroy(&table->write_lock);
 	mx_destroy(&table->table_lock);
 	if (table->forks)
 		free(table->forks);
-	if (table->philosophers)
-		free(table->philosophers);
+	if (table->philos)
+		free(table->philos);
 }
 
 void	destroy_table(t_table *table)
 {
-	if (table->philosophers)
+	if (table->philos)
 	{
 		while (table->n_philo_mx > 0)
-			mx_destroy(&table->philosophers[--table->n_philo_mx].lock);
+			mx_destroy(&table->philos[--table->n_philo_mx].lock);
 	}
 	if (table->forks)
 	{
@@ -54,9 +54,9 @@ void	destroy_table(t_table *table)
 		free(table->forks);
 		table->forks = NULL;
 	}
-	if (table->philosophers)
+	if (table->philos)
 	{
-		free(table->philosophers);
-		table->philosophers = NULL;
+		free(table->philos);
+		table->philos = NULL;
 	}
 }

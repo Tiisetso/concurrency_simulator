@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 14:21:24 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:23:09 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,76 +17,62 @@ t_uint	end_table(t_table *table)
 	return (mx_get_uint(&table->table_lock, &table->flag_end));
 }
 
-
-
 void	*mealtime(void *data)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)data;
 	wait_all_threads(philo->table);
-	if (philo->table->n_philo < 50)
-		usleep(1000 * philo->i);
-	else
-	{
-		if (philo->i % 2 == 0)
-			usleep(5000);
-		else if (philo->table->n_philo % 2 != 0 && philo->i == 1)
-			usleep(5000);
-	}
-	mx_set_uint(&philo->lock, &philo->last_meal_time, get_time_ms());
-	increase_count(&philo->table->table_lock, &philo->table->thread_count);
+	if (philo->i % 2 == 0)
+		usleep(5000);
+	else if (philo->table->n_philo % 2 != 0 && philo->i == 1)
+		usleep(5000);
+	mx_set_uint(&philo->lock, &philo->last_meal_time_ms, get_time_ms());
+	increase_count(&philo->table->table_lock, &philo->table->n_thread);
 	// think(philo); //TODO: improve on this.
 	while (!end_table(philo->table))
 	{
 		if (philo->full)
+		// if (mx_get_uint(&philo->lock, &philo->full))
 			break ;
 		// if(!end_table(philo->table))
 		eat(philo);
-		if(!end_table(philo->table))	
-			philo_sleep(philo);
-		if(!end_table(philo->table))	
-			think(philo);
+		// if(!end_table(philo->table))
+		philo_sleep(philo);
+		// if(!end_table(philo->table))
+		think(philo);
 	}
 	return (NULL);
 }
-
 
 void	*monitor_meal(void *data)
 {
 	t_table	*table;
 	t_uint	i;
-	t_uint	current_time;
+	t_uint	current_time_ms;
 	t_uint	full_count;
-	t_uint elapsed;
+	t_uint	elapsed;
 
 	table = (t_table *)data;
-	while(mx_get_uint(&table->table_lock, &table->thread_count) <  table->n_philo)
+	while (mx_get_uint(&table->table_lock, &table->n_thread) < table->n_philo)
 		usleep(1000);
-	i = 0;
 	while (!end_table(table))
 	{
 		i = 0;
 		full_count = 0;
 		while (i < table->n_philo && !end_table(table))
 		{
-			// if (philo_death(table->philosophers + i, current_time))
-			// {
-			// 	usleep(500);
-				current_time = get_time_ms();
-				if (philo_death(table->philosophers + i, current_time))
-				{
-					mx_lock(&table->write_lock);
-					mx_set_uint(&table->table_lock, &table->flag_end, 1);
-					elapsed = current_time - table->time_start;
-					printf("%lu %lu %s\n", elapsed, table->philosophers[i].i,
-						DIE);
-					mx_unlock(&table->write_lock);
-					return (NULL);
-				}
-			// }
-			if (mx_get_uint(&table->philosophers[i].lock,
-					&table->philosophers[i].full))
+			current_time_ms = get_time_ms();
+			if (philo_death(table->philos + i, current_time_ms))
+			{
+				mx_lock(&table->write_lock);
+				mx_set_uint(&table->table_lock, &table->flag_end, 1);
+				elapsed = current_time_ms - table->time_start;
+				printf("%lu %lu %s\n", elapsed, table->philos[i].i, DIE);
+				mx_unlock(&table->write_lock);
+				return (NULL);
+			}
+			if (mx_get_uint(&table->philos[i].lock, &table->philos[i].full))
 				full_count++;
 			i++;
 		}
@@ -100,58 +86,56 @@ void	*monitor_meal(void *data)
 	return (NULL);
 }
 
-void clean_failed_threads(t_table *table, t_uint n)
+void	clean_failed_threads(t_table *table, t_uint n)
 {
-	t_uint i;
+	t_uint	i;
 
 	mx_set_uint(&table->table_lock, &table->flag_end, 1);
 	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
-
 	i = 0;
-	while(i < n)
+	while (i < n)
 	{
-		pthread_join(table->philosophers[i].thread_i, NULL);
+		td_join(table->philos[i].thread);
 		i++;
 	}
 }
 
-
-int	start_table(t_table *table)
+int	start_table(t_table *t)
 {
 	t_uint	i;
 
-	table->time_start = get_time_ms();
-	if (table->n_philo == 1)
+	t->time_start = get_time_ms();
+	if (t->n_philo == 1)
 	{
-		if(pthread_create(&table->philosophers[0].thread_i, NULL, one_philo, &table->philosophers[0]) != 0)
-			exit_print("Thread creation error.");
+		if (td_create(&t->philos[0].thread, one_philo, &t->philos[0]) != 0)
+			return (return_error("1 philosopher thread creation error.", 0));
+		i = 1;
 	}
 	else
 	{
 		i = 0;
-		while (i < table->n_philo)
+		while (i < t->n_philo)
 		{
-			if(pthread_create(&table->philosophers[i].thread_i, NULL, mealtime, &table->philosophers[i]) != 0)
+			if (td_create(&t->philos[i].thread, mealtime, &t->philos[i]) != 0)
 			{
-				clean_failed_threads(table, i);
-				exit_print("Philosopher thread creation failure.");
+				clean_failed_threads(t, i);
+				return (return_error("Philosopher thread creation error.", 0));
 			}
 			i++;
 		}
 	}
-
-	if(pthread_create(&table->monitor, NULL, monitor_meal, table) != 0)
+	if (td_create(&t->monitor, monitor_meal, t) != 0)
 	{
-		clean_failed_threads(table, i);
-		exit_print("Monitor thread creation failure.");
+		clean_failed_threads(t, i);
+		return (return_error("Monitor thread creation failure.", 0));
 	}
-	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
+	mx_set_uint(&t->table_lock, &t->all_threads_ready, 1);
 	i = 0;
-	while (i < table->n_philo)
+	while (i < t->n_philo)
 	{
-		pthread_join(table->philosophers[i].thread_i, NULL);
+		td_join(t->philos[i].thread);
 		i++;
 	}
-	pthread_join(table->monitor, NULL);
+	td_join(t->monitor);
 	return (0);
 }

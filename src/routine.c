@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 14:09:01 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 14:51:28 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:27:11 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	eat(t_philo *philo)
 	mx_unlock(philo->right_fork);
 }
 
-void philo_sleep(t_philo *philo)
+void	philo_sleep(t_philo *philo)
 {
 	mx_print(SLEEP, philo);
 	sleep_stage(philo->table->time_to_nap_us, philo->table);
@@ -40,14 +40,15 @@ void	think(t_philo *philo)
 	sleep_stage(philo->table->time_to_cog_us, philo->table);
 }
 
-t_uint	philo_death(t_philo *philo, t_uint current_time)
+t_uint	philo_death(t_philo *philo, t_uint current_time_ms)
 {
 	t_uint	elapsed;
 	t_uint	die_time_ms;
 
 	if (mx_get_uint(&philo->lock, &philo->full))
 		return (0);
-	elapsed = current_time - mx_get_uint(&philo->lock, &philo->last_meal_time_ms);
+	elapsed = current_time_ms - mx_get_uint(&philo->lock,
+			&philo->last_meal_time_ms);
 	die_time_ms = philo->table->time_to_die_us / 1000;
 	if (elapsed > die_time_ms)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 14:57:15 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 15:06:25 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ static int	init_philo(t_table *table)
 	i = 0;
 	while (i < table->n_philo)
 	{
-		table->philosophers[i].i = i + 1;
-		table->philosophers[i].full = 0;
-		table->philosophers[i].servings = 0;
-		table->philosophers[i].table = table;
-		if (!mx_init(&table->philosophers[i].lock))
+		table->philos[i].i = i + 1;
+		table->philos[i].full = 0;
+		table->philos[i].servings = 0;
+		table->philos[i].table = table;
+		if (!mx_init(&table->philos[i].lock))
 			return (return_error("Philosopher mutex init fail.", 0));
 		table->n_philo_mx++;
-		assign_forks(&table->philosophers[i], table->forks, i, table->n_philo);
+		assign_forks(&table->philos[i], table->forks, i, table->n_philo);
 		i++;
 	}
 	return (1);
@@ -66,7 +66,7 @@ static void	init_table_values(t_table *table)
 	table->flag_end = 0;
 	table->all_threads_ready = 0;
 	table->n_thread = 0;
-	table->philosophers = NULL;
+	table->philos = NULL;
 	table->n_philo_mx = 0;
 	table->forks = NULL;
 	table->n_fork_mx = 0;
@@ -77,8 +77,8 @@ static void	init_table_values(t_table *table)
 int	init_table(t_table *table)
 {
 	init_table_values(table);
-	table->philosophers = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
-	if (!table->philosophers)
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
+	if (!table->philos)
 		return (return_error("malloc error philosophers", 0));
 	if (!mx_init(&table->table_lock))
 		return (return_error("Table mutex init fail", 0));
