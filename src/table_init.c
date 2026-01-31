@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:31 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 22:30:12 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 13:11:30 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,49 +26,72 @@ static void	assign_forks(t_philo *philo, t_mx *forks, t_uint i, t_uint n)
 	}
 }
 
-void	init_philo(t_table *table)
+static int	init_philo(t_table *table)
 {
 	t_uint	i;
-	t_philo	*philo;
 
 	i = 0;
 	while (i < table->n_philo)
 	{
-		philo = table->philosophers + i;
-		philo->i = i + 1;
-		philo->full = 0;
-		philo->servings = 0;
-		philo->table = table;
-		mx_init(&philo->lock); //TODO
-		assign_forks(philo, table->forks, i, table->n_philo);
+		table->philosophers[i].i = i + 1;
+		table->philosophers[i].full = 0;
+		table->philosophers[i].servings = 0;
+		table->philosophers[i].table = table;
+		if (!mx_init(&table->philosophers[i].lock))
+			return (return_error("Philosopher mutex init fail.", 0));
+		table->n_philo_mx++;
+		assign_forks(&table->philosophers[i], table->forks, i, table->n_philo);
 		i++;
 	}
+	return (1);
+}
+
+static int	init_forks(t_table *table)
+{
+	t_uint	i;
+
+	i = 0;
+	while (i < table->n_philo)
+	{
+		if (!mx_init(&table->forks[i]))
+			return (0);
+		table->n_fork_mx++;
+		i++;
+	}
+	return (1);
+}
+
+static void	init_table_values(t_table *table)
+{
+	table->flag_end = 0;
+	table->all_threads_ready = 0;
+	table->thread_count = 0;
+	table->philosophers = NULL;
+	table->n_philo_mx = 0;
+	table->forks = NULL;
+	table->n_fork_mx = 0;
+	table->table_lock_init = false;
+	table->write_lock_init = false;
 }
 
 int	init_table(t_table *table)
 {
-	t_uint	i;
-
-	table->flag_end = 0;
-	table->all_threads_ready = 0;
-	table->thread_count = 0;
+	init_table_values(table);
 	table->philosophers = (t_philo *)malloc(sizeof(t_philo) * table->n_philo);
 	if (!table->philosophers)
-		exit_print("malloc error philosophers");
-	mx_init(&table->table_lock); //TODO
-	mx_init(&table->write_lock); //TODO
+		return (return_error("malloc error philosophers", 0));
+	if (!mx_init(&table->table_lock))
+		return (return_error("Table mutex init fail", 0));
+	table->table_lock_init = true;
+	if (!mx_init(&table->write_lock))
+		return (return_error("Table write mutex init fail", 0));
+	table->write_lock_init = true;
 	table->forks = (t_mx *)malloc(sizeof(t_mx) * table->n_philo);
 	if (!table->forks)
-	{
-		free(table->philosophers);
-		exit_print("malloc error forks");
-	}
-	i = 0;
-	while (i < table->n_philo)
-	{
-		mx_init(&table->forks[i]);
-		i++;
-	}
-	init_philo(table);
+		return (return_error("malloc error forks", 0));
+	if (!init_forks(table))
+		return (return_error("Fork mutexes init fail", 0));
+	if (!init_philo(table))
+		return (return_error("Init philo failed.", 0));
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:08 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 22:31:30 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 12:19:16 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define FORK "has taken a fork"
 # define EAT "is eating"
@@ -66,11 +67,15 @@ typedef struct s_table
 	t_uint				time_start;
 	t_uint				flag_end;
 	t_mx				*forks;
+	t_uint				n_fork_mx;
 	t_philo				*philosophers;
+	t_uint				n_philo_mx;
 	t_uint				all_threads_ready;
 	t_uint				thread_count;
 	t_mx				write_lock;
+	bool				write_lock_init;
 	t_mx				table_lock;
+	bool				table_lock_init;
 	t_td				monitor;
 }						t_table;
 
@@ -79,10 +84,12 @@ int						init_table(t_table *table);
 void					start_table(t_table *table);
 void					clean_table(t_table *table);
 
-void					mx_destroy(t_mx *mutex);
-void					mx_init(t_mx *mutex);
-void					mx_unlock(t_mx *mutex);
-void					mx_lock(t_mx *mutex);
+void	destroy_table(t_table *table);
+
+int					mx_destroy(t_mx *mutex);
+int					mx_init(t_mx *mutex);
+int					mx_unlock(t_mx *mutex);
+int					mx_lock(t_mx *mutex);
 
 void					mx_set_uint(t_mx *mutex, t_uint *dest, t_uint val);
 t_uint					mx_get_uint(t_mx *mutex, t_uint *val);

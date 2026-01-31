@@ -6,40 +6,40 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 12:51:10 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/27 15:57:42 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 11:18:16 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	mutex_error(int status)
+static int	mutex_error(int status)
 {
 	if (status == 0)
-		return ;
+		return (1);
 	else if (status == EBUSY)
-		exit_print("mutex is locked");
+		return (return_error("mutex is locked", 0));
 	else if (status == EDEADLK)
-		exit_print("mutex is deadlocked");
+		return (return_error("mutex is deadlocked", 0));
 	else
-		exit_print("mutex error");
+		return (return_error("mutex error", 0));
 }
 
-void	mx_lock(t_mx *mutex)
+int	mx_lock(t_mx *mutex)
 {
-	mutex_error(pthread_mutex_lock(mutex));
+	return (mutex_error(pthread_mutex_lock(mutex)));
 }
 
-void	mx_unlock(t_mx *mutex)
+int	mx_unlock(t_mx *mutex)
 {
-	mutex_error(pthread_mutex_unlock(mutex));
+	return (mutex_error(pthread_mutex_unlock(mutex)));
 }
 
-void	mx_init(t_mx *mutex)
+int	mx_init(t_mx *mutex)
 {
-	mutex_error(pthread_mutex_init(mutex, NULL));
+	return (mutex_error(pthread_mutex_init(mutex, NULL)));
 }
 
-void	mx_destroy(t_mx *mutex)
+int	mx_destroy(t_mx *mutex)
 {
-	mutex_error(pthread_mutex_destroy(mutex));
+	return (mutex_error(pthread_mutex_destroy(mutex)));
 }

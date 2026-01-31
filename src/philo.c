@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 14:02:05 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/30 22:18:40 by timurray         ###   ########.fr       */
+/*   Updated: 2026/01/31 12:54:52 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int ac, char **av)
 		return(return_usage_error(EXIT_FAILURE));
 	if(!init_table(&table))
 	{
+		destroy_table(&table);
 		return (EXIT_FAILURE);
 	}
 	start_table(&table);
@@ -57,7 +58,8 @@ SHOULD DIE
 
 ./philo 199 610 200 200 10    
 
-
+SHOULD DIE:
+./philo 31 599 200 200 10
 
 stagger with more
 Then start with thinking
