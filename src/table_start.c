@@ -6,7 +6,7 @@
 /*   By: timurray <timurray@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 12:10:28 by timurray          #+#    #+#             */
-/*   Updated: 2026/01/31 17:01:11 by timurray         ###   ########.fr       */
+/*   Updated: 2026/02/01 12:59:07 by timurray         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	start_table(t_table *table)
 {
 	t_uint	i;
 
-	table->time_start = get_time_ms();
 	i = 0;
 	if (!create_philo_threads(table, &i))
 		return (0);
@@ -99,6 +98,7 @@ int	start_table(t_table *table)
 		clean_failed_threads(table, i);
 		return (return_error("Monitor thread creation failure.", 0));
 	}
+	table->time_start = get_time_ms();
 	mx_set_uint(&table->table_lock, &table->all_threads_ready, 1);
 	i = 0;
 	while (i < table->n_philo)
