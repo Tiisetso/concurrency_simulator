@@ -8,7 +8,7 @@ Each philosopher runs in its own thread and needs two forks to eat. The program 
 ChatGPT and Gemini were used to:
 - search comprehensively for resources.
 - review minor syntax challenges.
-- assist creation of the bash test script.
+- assist in creation of the bash test script.
 - assist in creation of README.md
 
 ## Requirements
